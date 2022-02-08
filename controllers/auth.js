@@ -55,6 +55,7 @@ exports.forgotpassword = async (req, res, next) => {
         <h1>You have requested a password reset</h1>
         <p>Please make a put request to the following link:</p>
         <a href=${resetUrl} clicktracking=off>${resetUrl}</a>`;
+        
         try{
             await sendEmail({
                 to: user.email,
