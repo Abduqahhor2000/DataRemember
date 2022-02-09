@@ -1,4 +1,5 @@
 const User = require("../models/User")
+const crypto = require("crypto")
 const ErrorResponse = require("../utils/errorResponse")
 const sendEmail = require("../utils/sendEmail")
 
@@ -49,36 +50,73 @@ exports.forgotpassword = async (req, res, next) => {
         await user.save()
         // console.log(email)
 
-        const resetUrl = `http://localhost:3000/passwordreset/${resetToken}`;
+        const resetUrl = `http://localhost:3000/api/auth/resetpassword/${resetToken}`;
 
         const message = `
-        <h1>You have requested a password reset</h1>
-        <p>Please make a put request to the following link:</p>
-        <a href=${resetUrl} clicktracking=off>${resetUrl}</a>`;
+            <h1>Siz parolingizni yangilashingiz kerak!</h1>
+            <p>Iltimos quyidagi havola tugmasini bosishingizni so'raymiz</p>
+            <button  style="display: block;
+                            width: 300px;
+                            height: 50px;
+                            margin: 15px 10px;
+                            background-color: #3636ff;
+                            color: white;
+                            border-radius: 5px;
+                            align-items: center;">
+                <a   style="text-decoration: none; 
+                            color: white;
+                            display: inline-block;
+                            width: 100%;
+                            height: 100%;
+                            padding-top: 13px;"  
+                            href=${resetUrl} clicktracking=off>
+                    Parolni Yangilash
+                </a>
+            </button>`;
         
         try{
             await sendEmail({
                 to: user.email,
-                subject: "Password Reset Request",
+                subject: "Parolni yangilash xabarnomasi",
                 text: message
             })
 
-            res.status(200).json({success: true, msg: "Email send"})
+            res.status(200).json({success: true, msg: "Pochtangizga xabar yuborildi"})
         }catch(error){
             user.resetPasswordToken = undefined
             user.resetPasswordExpire = undefined
             await user.save()
 
-            return next(new ErrorResponse("Email could not be send", 500))
+            return next(new ErrorResponse("Elektron pochtangizga xat yuborishning iloji bo'lmadi.", 500))
         }
 
     }catch(error){
-        console.log("fkdsfhsk")
         next(error)
     }
 }
 exports.resetpassword = async (req, res, next) => {
+    const resetPasswordToken = crypto.createHash("sha256").update(req.params.resetToken).digest("hex");
+    try{
+        const user = await User.findOne({
+            resetPasswordToken,
+            resetPasswordExpire: { $gt: Date.now() }
+        })
+
+        if(!user){
+            return next(new ErrorResponse("Kechirasiz xatolik ro'y berdi", 400))
+        }
+
+        user.password = req.body.password;
+        user.resetPasswordToken = undefined;
+        user.resetPasswordExpire = undefined;
     
+        await user.save();
+        console.log(user)
+
+        res.status(201).json({success: true, data: "Parolni yangilash muvaffaqiyatli bajarildi!"})
+    }catch(err){
+        next(err)
+    }
 }
 
 const sendToken = (user, statusCode, res) => {
