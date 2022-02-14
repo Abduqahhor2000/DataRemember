@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import "./private.scss";
+import { useLocation } from "react-router-dom";
 
 const Private = () => {
+  const history = useLocation();
   const [error, setError] = useState("");
   const [privateData, setPrivateData] = useState("");
 
@@ -21,6 +23,7 @@ const Private = () => {
       } catch (error) {
         localStorage.removeItem("authToken");
         setError("You are not authorized please login");
+        history("/login")
       }
     };
 

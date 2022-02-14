@@ -58,7 +58,7 @@ const ResetPassword = () => {
         {error && <span className="error-message">{error} </span>}
         {success && (
           <span className="success-message">
-            {success} <Link to="/api/auth/login">Login</Link>
+            {success} <Link to="/login">Login</Link>
           </span>
         )}
         <div className="form-group">

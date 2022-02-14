@@ -12,6 +12,7 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: [true, "Iltimos email ni kiriting!"],
         unique: true,
+        lowercase: true,
         match: [
             /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
         "Iltimos email ni to'g'ri kiriting!",]
@@ -22,6 +23,15 @@ const UserSchema = new mongoose.Schema({
         minlength: 8,
         select: false
     },
+    zipCode: {
+        type: String,
+        required: [true, "Iltimos Zip Code ni to'ldiring!"],
+        minlength: 6,
+    },
+    clientTypes: [{
+        clientType: String,
+        quantity: Number,
+    }],
     resetPasswordToken: String,
     resetPasswordExpire: Date,
 })

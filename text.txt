@@ -1,0 +1,11 @@
+"success": true,
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMGE3MGU0OWE5MjE1MjMwNmYyMGM5NiIsImlhdCI6MTY0NDg1MTQyOCwiZXhwIjoxNjQ0ODUyMDI4fQ.CESbnor5Sp8IBjQy0WN-O8iU3KecMn0-I7BHOvce0XQ",
+    "user": {
+        "username": "abdujamal",
+        "email": "abdujamal@gmail.com",
+        "password": "$2a$10$iLXr0mF/q3XPrcysm.0EHeBoiPLUjXJtKeeRc2ZLqC.a/2UC0mnrC",
+        "zipCode": "123456",
+        "_id": "620a70e49a92152306f20c96",
+        "clientTypes": [],
+        "__v": 0
+    }

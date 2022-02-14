@@ -4,10 +4,10 @@ const ErrorResponse = require("../utils/errorResponse")
 const sendEmail = require("../utils/sendEmail")
 
 exports.register = async (req, res, next) => {
-    const { username, email, password } = req.body;
+    const { username, email, password, zipCode } = req.body;
     console.log(username) 
     try {
-      const user = await User.create({username, email, password});
+      const user = await User.create({username, email, password, zipCode});
         sendToken(user, 200, res)
     } 
     catch(err){
@@ -50,7 +50,7 @@ exports.forgotpassword = async (req, res, next) => {
         await user.save()
         // console.log(email)
 
-        const resetUrl = `http://localhost:3000/api/auth/resetpassword/${resetToken}`;
+        const resetUrl = `http://localhost:3000/resetpassword/${resetToken}`;
 
         const message = `
             <h1>Siz parolingizni yangilashingiz kerak!</h1>

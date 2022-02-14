@@ -11,7 +11,7 @@ const Login = () => {
 
   useEffect(() => {
     if (localStorage.getItem("authToken")) {
-      history("/api/private");
+      history("/private");
     }
   },[history]);
 
@@ -33,7 +33,7 @@ const Login = () => {
 
       localStorage.setItem("authToken", data.token);
 
-      history("/api/private");
+      history("/private");
     } catch (error) {
       console.log(error);
       setTimeout(() => {
@@ -62,7 +62,7 @@ const Login = () => {
         <div className="form-group">
           <label htmlFor="password">
             Password:{" "}
-            <Link to="/api/auth/forgotpassword" className="login-screen__forgotpassword">
+            <Link to="/forgotpassword" className="login-screen__forgotpassword">
               Forgot Password?
             </Link>
           </label>
@@ -82,7 +82,7 @@ const Login = () => {
         </button>
 
         <span className="login-screen__subtext">
-          Don't have an account? <Link to="/api/auth/register">Register</Link>
+          Don't have an account? <Link to="/register">Register</Link>
         </span>
       </form>
     </div>

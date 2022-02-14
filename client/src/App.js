@@ -15,11 +15,11 @@ const App = () => {
       <div className="App">
         <Routes>
           <Route exact path="/" element={<PrivateRoute><Private/></PrivateRoute>}/>
-          <Route exact path="/api/private" element={<PrivateRoute><Private/></PrivateRoute>}/>
-          <Route exact path="/api/auth/login" element={<Login/>} />
-          <Route exact path="/api/auth/register" element={<Register/>} />
-          <Route exact path="/api/auth/forgotpassword" element={<ForgotPassword/>} />
-          <Route exact path="/api/auth/resetpassword/:resetToken" element={<ResetPassword/>} />
+          <Route exact path="/private" element={<PrivateRoute><Private/></PrivateRoute>}/>
+          <Route exact path="/login" element={<Login/>} />
+          <Route exact path="/register" element={<Register/>} />
+          <Route exact path="/forgotpassword" element={<ForgotPassword/>} />
+          <Route exact path="/resetpassword/:resetToken" element={<ResetPassword/>} />
         </Routes>
       </div>
     </BrowserRouter>

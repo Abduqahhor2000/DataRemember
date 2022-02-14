@@ -42,7 +42,7 @@ const Register = () => {
 
       localStorage.setItem("authToken", data.token);
 
-      history("/api/private");
+      history("/private");
     } catch (error) {
       console.log(error)
       setTimeout(() => {
@@ -107,7 +107,7 @@ const Register = () => {
         </button>
 
         <span className="register-screen__subtext">
-          Already have an account? <Link to="/api/auth/login">Login</Link>
+          Already have an account? <Link to="/login">Login</Link>
         </span>
       </form>
     </div>
