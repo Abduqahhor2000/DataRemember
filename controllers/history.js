@@ -1,8 +1,9 @@
 const Client = require("../models/Client")
 const User = require("../models/User")
+const History = require("../models/")
 const ErrorResponse = require("../utils/errorResponse")
 
-exports.addclient = async function (req, res, next) {
+exports.addhistory = async function (req, res, next) {
     const {sellerID, zipCode, clientType, fullName, phoneNumber, bio} = req.body
 
     try{
@@ -23,7 +24,7 @@ exports.addclient = async function (req, res, next) {
         next(new ErrorResponse("Noto'g'ri ID yuborildi!"))
     }
 }
-exports.deleteclient = async function (req, res, next) {
+exports.deletehistory = async function (req, res, next) {
     const {sellerID, zipCode} = req.body
     const clientID = req.params.clientID
     try{
@@ -42,7 +43,7 @@ exports.deleteclient = async function (req, res, next) {
         next( new ErrorResponse("Sotuvchi ID si noto'g'ri yuborilgan!"))
     }
 }
-exports.getclients = async function (req, res, next) {
+exports.gethistorys = async function (req, res, next) {
     const {sellerID, clientType} = req.body
     try{
         const user = await User.findById(sellerID)
@@ -57,7 +58,7 @@ exports.getclients = async function (req, res, next) {
         next( new ErrorResponse("Sotuvchi ID si noto'g'ri yuborilgan!"))
     }
 }
-exports.updateclient = async function (req, res, next) {
+exports.updatehistory = async function (req, res, next) {
     const {sellerID, zipCode, clientType, fullName, phoneNumber, bio} = req.body
     const clientID = req.params.clientID
 
