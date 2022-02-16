@@ -28,6 +28,14 @@ const UserSchema = new mongoose.Schema({
         required: [true, "Iltimos Zip Code ni to'ldiring!"],
         minlength: 6,
     },
+    createAt: {
+        type: Date,
+        default: new Date(),
+    },
+    updateAt: {
+        type: Date,
+        default: new Date(),
+    },
     clientTypes: [{
         clientType: String,
         quantity: Number,

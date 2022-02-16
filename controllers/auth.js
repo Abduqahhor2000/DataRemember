@@ -7,7 +7,10 @@ exports.register = async (req, res, next) => {
     const { username, email, password, zipCode } = req.body;
     console.log(username) 
     try {
-      const user = await User.create({username, email, password, zipCode});
+      const user = await User.create({username, email, password, zipCode, clientTypes: [{
+        clientType: "Vachach",
+        quantity: "234",
+    }]});
         sendToken(user, 200, res)
     } 
     catch(err){
@@ -96,6 +99,30 @@ exports.forgotpassword = async (req, res, next) => {
 }
 exports.resetpassword = async (req, res, next) => {
     const resetPasswordToken = crypto.createHash("sha256").update(req.params.resetToken).digest("hex");
+    try{
+        const user = await User.findOne({
+            resetPasswordToken,
+            resetPasswordExpire: { $gt: Date.now() }
+        })
+
+        if(!user){
+            return next(new ErrorResponse("Kechirasiz xatolik ro'y berdi", 400))
+        }
+
+        user.password = req.body.password;
+        user.resetPasswordToken = undefined;
+        user.resetPasswordExpire = undefined;
+    
+        await user.save();
+        console.log(user)
+
+        res.status(201).json({success: true, data: "Parolni yangilash muvaffaqiyatli bajarildi!"})
+    }catch(err){
+        next(err)
+    }
+}
+exports.updateUser = async (req, res, next) => {
+    const {user}
     try{
         const user = await User.findOne({
             resetPasswordToken,
