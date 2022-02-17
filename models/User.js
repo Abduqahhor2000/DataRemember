@@ -6,7 +6,8 @@ const crypto = require("crypto")
 const UserSchema = new mongoose.Schema({
     username: {
         type: String,
-        required: [true, "Iltimos username ni kiriting!"]
+        required: [true, "Iltimos username ni kiriting!"],
+        minlength: 5
     },
     email:{
         type: String,
@@ -26,7 +27,7 @@ const UserSchema = new mongoose.Schema({
     zipCode: {
         type: String,
         required: [true, "Iltimos Zip Code ni to'ldiring!"],
-        minlength: 6,
+        minlength: 6
     },
     createAt: {
         type: Date,
@@ -36,10 +37,6 @@ const UserSchema = new mongoose.Schema({
         type: Date,
         default: new Date(),
     },
-    clientTypes: [{
-        clientType: String,
-        quantity: Number,
-    }],
     resetPasswordToken: String,
     resetPasswordExpire: Date,
 })
@@ -64,13 +61,11 @@ UserSchema.methods.getSignToken = function () {
 
 UserSchema.methods.getResetPasswordToken = function () {
    const resetToken = crypto.randomBytes(20).toString("hex")
-   console.log(resetToken)
+   
    this.resetPasswordToken = crypto.createHash("sha256").update(resetToken).digest("hex")
-   console.log(this.resetPasswordToken)
+   
    this.resetPasswordExpire = Date.now() + 10*60*1000
-   console.log(this.resetPasswordExpire)
-
-   console.log(resetToken)
+   
    return resetToken
 }
 

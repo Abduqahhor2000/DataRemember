@@ -7,10 +7,7 @@ exports.register = async (req, res, next) => {
     const { username, email, password, zipCode } = req.body;
     console.log(username) 
     try {
-      const user = await User.create({username, email, password, zipCode, clientTypes: [{
-        clientType: "Vachach",
-        quantity: "234",
-    }]});
+      const user = await User.create({username, email, password, zipCode});
         sendToken(user, 200, res)
     } 
     catch(err){
@@ -121,21 +118,30 @@ exports.resetpassword = async (req, res, next) => {
         next(err)
     }
 }
-exports.updateUser = async (req, res, next) => {
-    const {user}
+exports.updateuser = async (req, res, next) => {
+    const {username, email, oldpassword, newpassword, oldzipCode, newzipCode} = req.body
+    const userID = req.params.userID
     try{
-        const user = await User.findOne({
-            resetPasswordToken,
-            resetPasswordExpire: { $gt: Date.now() }
-        })
-
+        const user = await User.findById(userID).select("+password")
         if(!user){
-            return next(new ErrorResponse("Kechirasiz xatolik ro'y berdi", 400))
+            return next(new ErrorResponse("Kechirasiz, bunaqa foidalanuchi topilmadi", 400))
+        }
+        const isMatch = await user.matchPassword(oldpassword);
+        if(!isMatch){
+            return next(new ErrorResponse("Noto'g'ri parol kirittingiz", 401))
+        }
+        if(oldzipCode !== user.zipCode){
+            return next(new ErrorResponse("Noto'g'ri zipcode kirittingiz", 401))
         }
 
-        user.password = req.body.password;
-        user.resetPasswordToken = undefined;
-        user.resetPasswordExpire = undefined;
+        if(newpassword){
+            user.password = newpassword
+        }
+        if(newzipCode){
+            user.zipCode = newzipCode
+        }
+        user.username = username
+        user.email = email
     
         await user.save();
         console.log(user)
@@ -148,5 +154,6 @@ exports.updateUser = async (req, res, next) => {
 
 const sendToken = (user, statusCode, res) => {
     const token = user.getSignToken()
-    res.status(statusCode).json({success: true, token, user: {...user, zipCode: null}})
+    console.log(user)
+    res.status(statusCode).json({success: true, token, user: {...user._doc, password: null, zipCode: null}})
 }
