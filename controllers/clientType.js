@@ -14,43 +14,29 @@ exports.addclient_type = async (req, res, next) => {
             return next(new ErrorResponse("Noto'g'ri zipcode kirittingiz", 401))
         }
 
-        const client_type = await ClientType.create({clientType, sellerID})
+        await ClientType.create({clientType, sellerID})
         res.status(201).json({success: true, data: "Parolni yangilash muvaffaqiyatli bajarildi!"})
     }catch(err){
         next(err)
     }
 }
 exports.getclient_types = async (req, res, next) => {
-    const {username, email, oldpassword, newpassword, oldzipCode, newzipCode} = req.body
-    const userID = req.params.userID
+    const {sellerID} = req.body
+
     try{
-        const user = await User.findById(userID).select("+password")
+        const user = await User.findById(sellerID)
         if(!user){
             return next(new ErrorResponse("Kechirasiz, bunaqa foidalanuchi topilmadi", 400))
         }
-        const isMatch = await user.matchPassword(oldpassword);
-        if(!isMatch){
-            return next(new ErrorResponse("Noto'g'ri parol kirittingiz", 401))
+        
+        try{
+            const client_types = await ClientType.find({sellerID})
+            res.status(200).json({success: true, data: client_types})
+        }catch(err){
+            return next(err)
         }
-        if(oldzipCode !== user.zipCode){
-            return next(new ErrorResponse("Noto'g'ri zipcode kirittingiz", 401))
-        }
-
-        if(newpassword){
-            user.password = newpassword
-        }
-        if(newzipCode){
-            user.zipCode = newzipCode
-        }
-        user.username = username
-        user.email = email
-    
-        await user.save();
-        console.log(user)
-
-        res.status(201).json({success: true, data: "Parolni yangilash muvaffaqiyatli bajarildi!"})
     }catch(err){
-        next(err)
+        next(new ErrorResponse("Mavjut bo'lmagan foydalanuvchi!"))
     }
 }
 exports.updateclient_type = async (req, res, next) => {

@@ -1,5 +1,6 @@
 const Client = require("../models/Client")
 const User = require("../models/User")
+const ClientType = require("../models/ClientType")
 const ErrorResponse = require("../utils/errorResponse")
 
 exports.addclient = async function (req, res, next) {
@@ -15,6 +16,9 @@ exports.addclient = async function (req, res, next) {
         
         try{
             const client = await Client.create({ sellerID, clientType, fullName, phoneNumber, bio })
+            const client_type = await ClientType.findOne({clientType, sellerID})
+            client_type.quality += 1 
+            await client_type.save()
             res.status(201).json({success: true, data: client})
         }catch(err){
             next(err)
@@ -24,7 +28,7 @@ exports.addclient = async function (req, res, next) {
     }
 }
 exports.deleteclient = async function (req, res, next) {
-    const {sellerID, zipCode} = req.body
+    const {sellerID, zipCode, clientType} = req.body
     const clientID = req.params.clientID
     try{
         const user = await User.findById(sellerID)
@@ -34,6 +38,9 @@ exports.deleteclient = async function (req, res, next) {
 
         try{
             await Client.findByIdAndDelete(clientID)
+            const client_type = await ClientType.findOne({clientType, sellerID})
+            client_type.quality -= 1 
+            await client_type.save()
             res.status(202).json({success: true})
         }catch(err){
             next(err)
@@ -65,7 +72,15 @@ exports.updateclient = async function (req, res, next) {
         const user = await User.findById(sellerID)
         if(!(user.zipCode === zipCode)){
             return next( new ErrorResponse("Zip Code noto'g'ri!"))
-        }  
+        }
+        const clientTypes = await ClientType.find({sellerID})
+        const clientTypes2 = clientTypes.find(function (item) {
+            return clientType === item.clientType
+        })
+        if(!clientTypes2){ 
+            console.log(clientTypes2)
+            return next( new ErrorResponse("Mijoszning BUnday turini avval kiritmagansiz. oldin kiriting uni!"))
+        }
 
         try{
             const client = await Client.findByIdAndUpdate(clientID, 
@@ -75,6 +90,16 @@ exports.updateclient = async function (req, res, next) {
                     phoneNumber, 
                     bio,
                 });
+            if(clientType !== client.clientType){
+                const client_type = await ClientType.findOne({clientType: client.clientType, sellerID})
+                if(client_type){
+                    client_type.quality -= 1 
+                    await client_type.save() 
+                }
+                const client_type2 = await ClientType.findOne({clientType, sellerID})  
+                client_type2.quality += 1 
+                await client_type2.save()
+            }
 
             res.status(201).json({success: true, data: await Client.findById(clientID)})
         }catch(err){
