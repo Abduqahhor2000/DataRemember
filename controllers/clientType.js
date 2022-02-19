@@ -1,4 +1,5 @@
 const User = require("../models/User")
+const Client = require("../models/Client")
 const ClientType = require("../models/ClientType")
 const ErrorResponse = require("../utils/errorResponse")
 
@@ -40,34 +41,28 @@ exports.getclient_types = async (req, res, next) => {
     }
 }
 exports.updateclient_type = async (req, res, next) => {
-    const {username, email, oldpassword, newpassword, oldzipCode, newzipCode} = req.body
-    const userID = req.params.userID
+    const {sellerID, clientType, zipCode} = req.body
+    const clientTypeID = req.params.typeID
     try{
-        const user = await User.findById(userID).select("+password")
+        const user = await User.findById(sellerID)
         if(!user){
             return next(new ErrorResponse("Kechirasiz, bunaqa foidalanuchi topilmadi", 400))
         }
-        const isMatch = await user.matchPassword(oldpassword);
-        if(!isMatch){
-            return next(new ErrorResponse("Noto'g'ri parol kirittingiz", 401))
-        }
-        if(oldzipCode !== user.zipCode){
+        if(zipCode !== user.zipCode){
             return next(new ErrorResponse("Noto'g'ri zipcode kirittingiz", 401))
         }
-
-        if(newpassword){
-            user.password = newpassword
+        
+        try{
+            const client_type = await ClientType.findByIdAndUpdate(clientTypeID, {
+                clientType,
+                updateAt: new Date()
+            })
+            const clients = await Client.updateMany({sellerID, clientType: client_type.clientType}, {clientType})
+            res.status(201).json({success: true, data: client_type})
+        }catch(err){
+            return next(new ErrorResponse("Malumotni yangilashda xatolikka yo'l qoyildi!", 401)) 
         }
-        if(newzipCode){
-            user.zipCode = newzipCode
-        }
-        user.username = username
-        user.email = email
-    
-        await user.save();
-        console.log(user)
 
-        res.status(201).json({success: true, data: "Parolni yangilash muvaffaqiyatli bajarildi!"})
     }catch(err){
         next(err)
     }

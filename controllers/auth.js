@@ -151,6 +151,14 @@ exports.updateuser = async (req, res, next) => {
         next(err)
     }
 }
+exports.getusers = async (req, res, next) => {
+    try{
+        const users = await User.find() 
+        res.status(200).json({success: true, data: users})
+    }catch(err){
+        next(err)
+    }
+}
 
 const sendToken = (user, statusCode, res) => {
     const token = user.getSignToken()
