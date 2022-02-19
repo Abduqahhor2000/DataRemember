@@ -21,6 +21,14 @@ const ClientSchema = new mongoose.Schema({
         type: String,
         default: "Mijoz haqida qisqacha malumotlar...",
     },
+    createAt: {
+        type: Date,
+        default: new Date(),
+    },
+    updateAt: {
+        type: Date,
+        default: new Date(),
+    },
 })
 
 const Client = mongoose.model("Client", ClientSchema)

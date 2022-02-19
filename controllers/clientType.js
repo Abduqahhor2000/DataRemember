@@ -68,34 +68,25 @@ exports.updateclient_type = async (req, res, next) => {
     }
 }
 exports.deleteclient_type = async (req, res, next) => {
-    const {username, email, oldpassword, newpassword, oldzipCode, newzipCode} = req.body
-    const userID = req.params.userID
+    const {sellerID, zipCode} = req.body
+    const typeID = req.params.typeID
     try{
-        const user = await User.findById(userID).select("+password")
+        const user = await User.findById(sellerID)
         if(!user){
             return next(new ErrorResponse("Kechirasiz, bunaqa foidalanuchi topilmadi", 400))
         }
-        const isMatch = await user.matchPassword(oldpassword);
-        if(!isMatch){
-            return next(new ErrorResponse("Noto'g'ri parol kirittingiz", 401))
-        }
-        if(oldzipCode !== user.zipCode){
+        if(zipCode !== user.zipCode){
             return next(new ErrorResponse("Noto'g'ri zipcode kirittingiz", 401))
         }
 
-        if(newpassword){
-            user.password = newpassword
+        try{
+            const client_type = await ClientType.findByIdAndDelete(typeID)
+            const clients = await Client.updateMany({sellerID, clientType: client_type.clientType}, {clientType: "standard"})
+            
+            res.status(201).json({success: true, data: clients})
+        }catch(err){
+            return next(err)
         }
-        if(newzipCode){
-            user.zipCode = newzipCode
-        }
-        user.username = username
-        user.email = email
-    
-        await user.save();
-        console.log(user)
-
-        res.status(201).json({success: true, data: "Parolni yangilash muvaffaqiyatli bajarildi!"})
     }catch(err){
         next(err)
     }
