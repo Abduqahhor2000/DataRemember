@@ -28,7 +28,7 @@ const Private = () => {
     };
 
     fetchPrivateDate();
-  }, []);
+  }, [history]);
   return error ? (
     <span className="error-message">{error}</span>
   ) : (
