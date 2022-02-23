@@ -15,8 +15,11 @@ exports.addclient = async function (req, res, next) {
         }
         
         try{
-            const client = await Client.create({ sellerID, clientType, fullName, phoneNumber, bio })
             const client_type = await ClientType.findOne({clientType, sellerID})
+            if(!client_type){
+                return next( new ErrorResponse("Bunday mijoz turi mavjut emas!"))
+            }
+            const client = await Client.create({ sellerID, clientType, fullName, phoneNumber, bio })
             client_type.quality += 1 
             await client_type.save()
             res.status(201).json({success: true, data: client})
@@ -35,9 +38,12 @@ exports.deleteclient = async function (req, res, next) {
         if(!(user.zipCode === zipCode)){
             return next( new ErrorResponse("Zip Code noto'g'ri!"))
         }  
-
+        
         try{
-            await Client.findByIdAndDelete(clientID)
+            const client = await Client.findByIdAndDelete(clientID)
+            if(!client){
+                return next( new ErrorResponse("Bu id bo'yicha malumot mavjut emas!"))
+            }
             const client_type = await ClientType.findOne({clientType, sellerID})
             client_type.quality -= 1 
             await client_type.save()

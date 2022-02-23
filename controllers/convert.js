@@ -9,7 +9,7 @@ exports.addconvert = async function (req, res, next) {
     try{
         const user = await User.findById(sellerID)
         const client = await Client.findById(clientID)
-        console.log(user, client)
+        
         if(!(client.sellerID === sellerID)){
             return next( new ErrorResponse("Sotuvchi va mijoz o'rtasida bo'liqlik topilmadi!"))
         }
