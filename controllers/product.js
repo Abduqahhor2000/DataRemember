@@ -9,7 +9,7 @@ exports.add_product = async (req, res, next) => {
     const {sellerID, productName, zipCode} = req.body
 
     try{
-        const user = await User.findOne({sellerID})
+        const user = await User.findById(sellerID)
         if (!user){
             return next( new ErrorResponse("Bunday foidalanuvchi mavjut emas!"))
         }
