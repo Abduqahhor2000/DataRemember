@@ -10,6 +10,9 @@ const Private = () => {
 
   useEffect(() => {
     const fetchPrivateDate = async () => {
+      if(!localStorage.getItem("authToken")){
+        history("/login")
+      }
       const config = {
         headers: {
           "Content-Type": "application/json",

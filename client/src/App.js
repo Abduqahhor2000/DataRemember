@@ -9,7 +9,7 @@ import './App.css';
 import axios from "axios"
 
 const App = () => {
-  axios.defaults.baseURL = "https://dataremember.herokuapp.com"
+  axios.defaults.baseURL = "https://dataremember.herokuapp.com/"
   console.log(axios.defaults.baseURL)
   return (
     <BrowserRouter>
