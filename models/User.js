@@ -7,7 +7,7 @@ const UserSchema = new mongoose.Schema({
     username: {
         type: String,
         required: [true, "Iltimos username ni kiriting!"],
-        minlength: 5
+        minlength: [5, "iltimos foydalanuvchi nomi 5ta belgidan ko'p bo'lishi kerak"],
     },
     email:{
         type: String,
