@@ -9,6 +9,7 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmpassword, setConfirmPassword] = useState("");
+  const [zipCode, setZipCode] = useState("");
   const [error, setError] = useState("");
 
   const registerHandler = async (e) => {
@@ -36,6 +37,7 @@ const Register = () => {
           username,
           email,
           password,
+          zipCode,
         }, 
         config
       );
@@ -100,6 +102,18 @@ const Register = () => {
             placeholder="Confirm password"
             value={confirmpassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="zipCode">Zip Code:</label>
+          <input
+            type="text"
+            required
+            id="zipCode"
+            autoComplete="true"
+            placeholder="zipCode"
+            value={zipCode}
+            onChange={(e) => setZipCode(e.target.value)}
           />
         </div>
         <button type="submit" className="btn btn-primary">
