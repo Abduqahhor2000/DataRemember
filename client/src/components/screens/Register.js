@@ -2,8 +2,11 @@ import { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import "./register.scss";
+import {useDispatch} from "react-redux"
+import { addUserData } from "../../store/actions/userDataAction";
 
 const Register = () => {
+  const dispatch = useDispatch()
   const history = useNavigate()
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -42,7 +45,9 @@ const Register = () => {
         config
       );
 
-      localStorage.setItem("authToken", data.token);
+      // localStorage.setItem("authToken", data.token);
+      console.log(data, "bashi")
+      dispatch(addUserData(data))
 
       history("/private");
     } catch (error) {
