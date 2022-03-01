@@ -43,15 +43,15 @@ const Register = () => {
           zipCode,
         }, 
         config
-      );
+      ).then(err=>console.log(err))
 
-      // localStorage.setItem("authToken", data.token);
       console.log(data, "bashi")
       dispatch(addUserData(data))
 
       history("/private");
     } catch (error) {
       console.log(error)
+      setError("Xatolik sodir bo'ldi. Iltimos qaytadan urinib ko'ring!")
       setTimeout(() => {
         setError("");
       }, 5000);
@@ -66,6 +66,7 @@ const Register = () => {
         <div className="form-group">
           <label htmlFor="name">Username:</label>
           <input
+            minLength={5}
             type="text"
             required
             id="name"
@@ -88,6 +89,7 @@ const Register = () => {
         <div className="form-group">
           <label htmlFor="password">Password:</label>
           <input
+            minLength={8}
             type="password"
             required
             id="password"
@@ -100,6 +102,7 @@ const Register = () => {
         <div className="form-group">
           <label htmlFor="confirmpassword">Confirm Password:</label>
           <input
+            minLength={8}
             type="password"
             required
             id="confirmpassword"
@@ -112,6 +115,7 @@ const Register = () => {
         <div className="form-group">
           <label htmlFor="zipCode">Zip Code:</label>
           <input
+            minLength={6}
             type="text"
             required
             id="zipCode"

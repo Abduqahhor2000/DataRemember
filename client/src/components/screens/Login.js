@@ -7,17 +7,19 @@ import "./login.scss";
 
 const Login = () => {
   const State_User = useSelector(state => state.user.user)
+  const [maunt, setMaunt] = useState(false)
   const dispatch = useDispatch()
-  const history = useNavigate()
+  const navigate = useNavigate()
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
   useEffect(() => {
     if (State_User.token) {
-      history("/private");
+      navigate("/user");
+      return;
     }
-  }, [history]);
+  }, [navigate, State_User]);
 
   const loginHandler = async (e) => {
     e.preventDefault();
@@ -35,12 +37,12 @@ const Login = () => {
         config
       );
 
-      // localStorage.setItem("authToken", data.token);
       dispatch(addUserData(data))
 
-      history("/private");
+      // history("/private");
     } catch (error) {
       console.log(error);
+      setError("Xatolik ro'y berdi. Iltimos qayta urunib ko'ring!")
       setTimeout(() => {
         setError("");
       }, 5000);

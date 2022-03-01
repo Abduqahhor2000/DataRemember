@@ -16,6 +16,6 @@ router.route("/client_type").post(addclient_type).get(getclient_types)
 router.route("/client_type/:typeID").put(updateclient_type).delete(deleteclient_type)
 
 router.route("/product").post(add_product)
-
+ 
 
 module.exports = router
