@@ -1,19 +1,23 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { addUserData } from "../../store/actions/userDataAction";
 import "./login.scss";
 
 const Login = () => {
+  const State_User = useSelector(state => state.user.user)
+  const dispatch = useDispatch()
   const history = useNavigate()
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
   useEffect(() => {
-    if (localStorage.getItem("authToken")) {
+    if (State_User.token) {
       history("/private");
     }
-  },[history]);
+  }, [history]);
 
   const loginHandler = async (e) => {
     e.preventDefault();
@@ -31,7 +35,8 @@ const Login = () => {
         config
       );
 
-      localStorage.setItem("authToken", data.token);
+      // localStorage.setItem("authToken", data.token);
+      dispatch(addUserData(data))
 
       history("/private");
     } catch (error) {
