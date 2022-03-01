@@ -19,17 +19,11 @@ const Private = () => {
           }
           console.log(State_User.user._id)
           const config = {
-            headers: {
-              "Content-Type": "application/json",
-            },
+            headers: {"Content-Type": "application/json"},
           };
     
           try {
-            const {data} = await axios.get(
-                "/api/auth/client_type", 
-                {"sellerID": State_User.user._id}, 
-                config
-                ).then(err=> console.log(err))
+            const {data} = await axios.post("/api/auth/getclient_type", {sellerID: State_User.user._id}, config).then(err=> console.log(err))
             console.log(data)
             setClient_type(data);
           } catch (error) {
