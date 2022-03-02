@@ -2,15 +2,21 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import "./user.scss";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { FaUserTie, FaListUl } from 'react-icons/fa'
+import AddClientTypeModal from "../modal/AddClientTypeModal";
+import EditClientTypeModal from "../modal/EditClientTypeModal";
+import DeleteClientTypeModal from "../modal/DeleteClientTypeModal"
 
 const Private = () => {
     const State_User = useSelector(state => state.user.user)
+    const [effect, setEffect] = useState(0)
     const navigate = useNavigate();
     const [client_type, setClient_type] = useState([])
-    const [error, setError] = useState("");
-    const [privateData, setPrivateData] = useState("");
+  
+    const [isAddTypeModalOpen, setIsAddClientModalOpen] = useState(true)
+    const [isEditTypeModalOpen, setIsEditTypeModalOpen] = useState(false)
+    const [isDeleteTypeModalOpen, setIsDeleteTypeModalOpen] = useState(false)
     
     useEffect(() => {
       const fetchPrivateDate = async () => {
@@ -29,11 +35,12 @@ const Private = () => {
             setClient_type(data.data.data);
           } catch (error) {
             console.log(error)
-            setError("You are not authorized please login");
           }
         };
         fetchPrivateDate()
-    }, [navigate, State_User])
+    }, [navigate, State_User, effect])
+
+ 
 
 
     return(
@@ -46,6 +53,7 @@ const Private = () => {
                   </div>
                 </div>
                 <div className="types">
+                  
                   {client_type.map(item => {
                     return (
                       <div className="type">
@@ -59,6 +67,12 @@ const Private = () => {
                   })}
                 </div>
             </div>
+            { isAddTypeModalOpen ? <AddClientTypeModal
+                                      setIsAddClientModalOpen={setIsAddClientModalOpen} 
+                                      setEffect={setEffect} 
+                                      effect={effect} /> : null }
+            { isEditTypeModalOpen ? <EditClientTypeModal/> : null }
+            { isDeleteTypeModalOpen ? <DeleteClientTypeModal/> : null }
         </>
     )
 }

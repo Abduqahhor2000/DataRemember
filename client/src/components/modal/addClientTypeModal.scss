@@ -1,0 +1,42 @@
+.addType_row{
+    width: 100%;
+    height: auto;
+    background-color: aquamarine;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 5px 10px;
+
+    form{
+        width: 100%;
+        margin-bottom: 10px;
+        display: flex;
+        justify-content: space-between;
+
+        input{
+            height: 30px;
+            width: calc(100% - 90px);
+        }
+        button{
+            width: 70px;
+            height: 30px;
+            background-color: #00cc00;
+            color: white;
+            border-radius: 5px;
+            border: 0;
+            cursor: pointer;
+
+            &:active{
+                background-color: #51ff51;
+            }
+        }
+    }
+    
+    .red_alert{
+        background-color: rgb(255, 72, 72);
+        height: auto;
+        color: white;
+        padding: 0 5px;
+        margin-bottom: 5px;
+    }
+}
