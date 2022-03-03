@@ -30,6 +30,50 @@
                 margin-left: 15px;
             }
         }
+        .buttons{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .add_type{
+                height: 100%;
+                margin-right: 10px;
+
+                button{
+                    height: 30px;
+                    padding: 5px 5px;
+                    background-color: #00cc00;
+                    color: white;
+                    border-radius: 5px;
+                    border: 0;
+                    cursor: pointer;
+
+                    &:active{
+                        background-color: #51ff51;
+                    }
+                }
+            }
+
+            .edit_user{
+                height: 100%;
+                margin-right: 10px;
+
+                button{
+                    height: 30px;
+                    padding: 5px 5px;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    background-color: white;
+                    color: rgb(119, 117, 117);
+                    border: 1px solid rgb(119, 117, 117) !important;
+    
+                    &:active{
+                        background-color: rgb(119, 117, 117);
+                        color: white;
+                    }
+                }
+            }
+        }
     }
     .types{
         width: 100%;

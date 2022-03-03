@@ -13,7 +13,6 @@ import axios from "axios"
 
 const App = () => {
   axios.defaults.baseURL = "https://dataremember.herokuapp.com/"
-  console.log(axios.defaults.baseURL)
   return (
     <BrowserRouter>
       <div className="App">

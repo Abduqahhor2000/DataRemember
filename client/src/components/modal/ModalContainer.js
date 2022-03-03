@@ -2,11 +2,12 @@ import React from "react";
 import {GrLinkNext} from "react-icons/gr"
 import "./modalContainer.scss" 
 
-const ModalContainer = ({setIsAddClientModalOpen, children}) => {
+const ModalContainer = ({setIsModalOpen, children}) => {
     return (
-        <div className="modal_fon">
+        <div className="modal_fon" >
+            <div onClick={() => setIsModalOpen(false)} className="modal_f"></div>
             <div className="modal_card">
-                <div onClick={() => setIsAddClientModalOpen(false)} className="modal_exit_icon"><GrLinkNext/></div>
+                <div onClick={() => setIsModalOpen(false)} className="modal_exit_icon"><GrLinkNext/></div>
                 {children}
             </div>
         </div>
