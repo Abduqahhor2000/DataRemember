@@ -35,13 +35,17 @@
             justify-content: space-between;
             align-items: center;
 
+            button{
+              font-size: 10px;
+            }
+
             .add_type{
                 height: 100%;
-                margin-right: 10px;
+                margin-right: 5px;
 
                 button{
-                    height: 30px;
-                    padding: 5px 5px;
+                    height: auto;
+                    padding: 5px;
                     background-color: #00cc00;
                     color: white;
                     border-radius: 5px;
@@ -56,11 +60,11 @@
 
             .edit_user{
                 height: 100%;
-                margin-right: 10px;
+                margin-right: 5px;
 
                 button{
-                    height: 30px;
-                    padding: 5px 5px;
+                    height: auto;
+                    padding: 5px;
                     border-radius: 5px;
                     cursor: pointer;
                     background-color: white;
@@ -76,11 +80,11 @@
             
             .log_out{
                 height: 100%;
-                margin-right: 10px;
+                margin-right: 5px;
 
                 button{
-                    height: 30px;
-                    padding: 5px 5px;
+                    height: auto;
+                    padding: 5px;
                     border-radius: 5px;
                     cursor: pointer;
                     background-color: rgb(240, 0, 0);
@@ -113,6 +117,7 @@
                 display: flex;
                 justify-content: flex-start;
                 align-items: center;
+                cursor: pointer;
 
                 .type_icon{
                     font-size: large;
@@ -126,6 +131,36 @@
                 .quality{
                     margin-left: 10px;
                 }
+            }
+            .type_buttons{
+              display: flex;
+              align-items: center;
+
+              .edit_type, .delete_type{
+                height: auto;
+                padding: 5px;
+                border-radius: 5px;
+                cursor: pointer;
+                background-color: white;
+                color: rgb(119, 117, 117);
+                border: 1px solid rgb(119, 117, 117) !important;
+                margin-left: 10px;
+    
+                &:active{
+                  background-color: rgb(119, 117, 117);
+                  color: white;
+                }
+              }
+
+              .delete_type{
+                background-color: rgb(240, 0, 0);
+                color: white;
+                border: 0 !important;
+
+                &:active{
+                  background-color: rgb(255, 88, 88);
+                }
+              }
             }
         }
         @keyframes ldio-3opmt1mq4co {

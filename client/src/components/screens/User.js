@@ -3,7 +3,7 @@ import axios from "axios";
 import "./user.scss";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { clearUserData } from "../../store/actions/userDataAction"
+import { clearUserData, addTypeName } from "../../store/actions/userDataAction"
 import { FaUserTie, FaListUl } from 'react-icons/fa'
 import AddClientTypeModal from "../modal/AddClientTypeModal";
 import EditClientTypeModal from "../modal/EditClientTypeModal";
@@ -65,7 +65,7 @@ const Private = () => {
                         <button onClick={()=>{setIsEditUserModalOpen(true)}} >Edit User</button>
                       </div>
                       <div className="log_out">
-                        <button onClick={()=>{dispatch(clearUserData())}}>Edit User</button>
+                        <button onClick={()=>{dispatch(clearUserData())}}>Log Out</button>
                       </div>
                   </div>
                 </div>
@@ -88,14 +88,14 @@ const Private = () => {
                 </div> : client_type.map(item => {
                     return (
                       <div className="type" key={item._id}>
-                        <div className="type_left">
+                        <div onClick={()=>{dispatch(addTypeName(item.clientType)); navigate("/client-type")}} className="type_left">
                           <div className="type_icon"><FaListUl/></div>
                           <div className="type_name">{item.clientType}</div>
                           <div className="quality">{item.quality}</div>
                         </div>
-                        <div>
-                        <button onClick={() => {setTypeID(item._id); setTypeName(item.clientType); setIsEditTypeModalOpen(true)}} type="button">Edit</button>
-                        <button onClick={() => {setTypeID(item._id); setTypeName(item.clientType); setIsDeleteTypeModalOpen(true)}} type="button">Delete</button>
+                        <div className="type_buttons">
+                          <button onClick={() => {setTypeID(item._id); setTypeName(item.clientType); setIsEditTypeModalOpen(true)}} type="button" className="edit_type">Edit</button>
+                          <button onClick={() => {setTypeID(item._id); setTypeName(item.clientType); setIsDeleteTypeModalOpen(true)}} type="button" className="delete_type">Delete</button>
                         </div>
                       </div>
                     )
