@@ -41,7 +41,7 @@ const ClientType = () => {
 
           try {
             const data = await axios.post(
-                "/api/client", 
+                "/api/client/get", 
                 {
                   sellerID: State_User.user._id,
                   clientType: State_Type, 

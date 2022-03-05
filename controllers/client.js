@@ -56,7 +56,7 @@ exports.deleteclient = async function (req, res, next) {
     }
 }
 exports.getclients = async function (req, res, next) {
-    const {sellerID, clientType} = req.params
+    const {sellerID, clientType} = req.body
     try{
         const user = await User.findById(sellerID)
     
