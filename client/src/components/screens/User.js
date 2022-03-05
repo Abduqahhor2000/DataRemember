@@ -10,7 +10,7 @@ import EditClientTypeModal from "../modal/EditClientTypeModal";
 import DeleteClientTypeModal from "../modal/DeleteClientTypeModal";
 import EditUserModal from "../modal/EditUserModal";
 
-const Private = () => {
+const User = () => {
     const State_User = useSelector(state => state.user.user)
     const dispatch = useDispatch()
     const [effect, setEffect] = useState(0)
@@ -128,4 +128,4 @@ const Private = () => {
     )
 }
 
-export default Private; 
+export default User; 

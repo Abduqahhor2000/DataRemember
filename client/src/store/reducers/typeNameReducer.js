@@ -10,7 +10,7 @@ const typeNameReducer = (state = defaultTypeName, action) => {
     switch(action.type) {
         case actionTypes.ADD_TYPE_NAME:{
             return{
-                type: type ? type : {},
+                typename: type ? type : {},
             }
         }
         case actionTypes.CLEAR_TYPE_NAME:{

@@ -15,7 +15,7 @@ const ClientSchema = new mongoose.Schema({
     },
     phoneNumber:{
         type: String,
-        required: [true, "Iltimos mijoz telefon raqamani kiriting!"],
+        default: "undefined"   
     },
     bio: {
         type: String,
