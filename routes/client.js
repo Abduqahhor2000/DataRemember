@@ -5,6 +5,7 @@ const { addconvert, deleteconvert, getconverts, updateconvert } = require("../co
 const { stat_client } = require("../controllers/statistic")
 
 router.route("/").post(addclient).get(getclients)
+router.route("/get").get(getclients)
 router.route("/:clientID").delete(deleteclient).put(updateclient)
 router.route("/convert").post(addconvert).get(getconverts)
 router.route("/convert/:convertID").put(updateconvert).delete(deleteconvert)

@@ -33,18 +33,19 @@ const ClientType = () => {
               return
           }
 
+          const config = {
+            header: {
+              "Content-Type": "application/json",
+            },
+          };
+
           try {
-            const data = await axios.get(
+            const data = await axios.post(
                 "/api/client", 
                 {
-                  headers:{
-                    "Content-Type": "application/json"
-                  },
-                  params: {
-                    sellerID: State_User.user._id,
-                    clientType: State_Type,
-                  }  
-                })
+                  sellerID: State_User.user._id,
+                  clientType: State_Type, 
+                }, config)
                 console.log(State_User.user._id,State_Type,data)
             setClients(data.data.data);
             setGetAllType(true)
