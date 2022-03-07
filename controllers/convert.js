@@ -4,7 +4,7 @@ const Convert = require("../models/Convert")
 const ErrorResponse = require("../utils/errorResponse")
 
 exports.addconvert = async function (req, res, next) {
-    const {sellerID, clientID, zipCode, convertType, productName, productType, price, quality, createAt} = req.body
+    const {sellerID, clientID, zipCode, convertType, productName, productType, price, quality} = req.body
 
     try{
         const user = await User.findById(sellerID)
@@ -29,7 +29,7 @@ exports.addconvert = async function (req, res, next) {
                         price, 
                         quality, 
                     },
-                    createAt,
+                    createAt: new Date(),
                 })
                 res.status(201).json({success: true, data: convert})
             }
@@ -41,7 +41,7 @@ exports.addconvert = async function (req, res, next) {
                     payment: {
                         quality, 
                     },
-                    createAt,
+                    createAt: new Date(),
                 })
                 res.status(201).json({success: true, data: convert})
             }
@@ -92,7 +92,7 @@ exports.updateconvert = async function (req, res, next) {
                     payment: {
                         quality, 
                     },
-                    createAt,
+                    updateAt: new Date(),
                 })
                 res.status(201).json({success: true})
             }

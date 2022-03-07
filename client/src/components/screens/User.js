@@ -3,7 +3,7 @@ import axios from "axios";
 import "./user.scss";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { clearUserData, addTypeName } from "../../store/actions/userDataAction"
+import { clearUserData, addTypeName, addTypesData } from "../../store/actions/userDataAction"
 import { FaUserTie, FaListUl } from 'react-icons/fa'
 import AddClientTypeModal from "../modal/AddClientTypeModal";
 import EditClientTypeModal from "../modal/EditClientTypeModal";
@@ -37,6 +37,7 @@ const User = () => {
           try {
             const data = await axios.post("/api/auth/getclient_type", {sellerID: State_User.user._id}, config)
             setClient_type(data.data.data);
+            dispatch(addTypesData(data.data.data))
             setGetAllType(true)
           } catch (error) {
             console.log(error)
@@ -44,7 +45,7 @@ const User = () => {
           }
         };
         fetchPrivateDate()
-    }, [navigate, State_User, effect])
+    }, [navigate, State_User, effect, dispatch])
 
  
 
@@ -70,8 +71,8 @@ const User = () => {
                   </div>
                 </div>
                 <div className="types">
-                  {!getAllType ?  <div class="loadingio-spinner-spinner-0udingbvrrcc">
-                  <div class="ldio-3opmt1mq4co">
+                  {!getAllType ?  <div className="loadingio-spinner-spinner-0udingbvrrcc">
+                  <div className="ldio-3opmt1mq4co">
                       <div></div>
                       <div></div>
                       <div></div>

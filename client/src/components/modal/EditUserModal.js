@@ -160,7 +160,7 @@ const EditUserModal = ({setIsEditUserModalOpen}) => {
                           {addTypeError ? <div className="red_alert">{addTypeError}</div> : null}
                         </div>
                         <div className="button_list">
-                          <button className="b_submit" type="submit">{isLoading ? <div className="lds-ring"><div></div><div></div><div></div><div></div></div> :"Delete"}</button>
+                          <button className="b_submit" type="submit">{isLoading ? <div className="lds-ring"><div></div><div></div><div></div><div></div></div> :"Edit"}</button>
                           <button onClick={() => {setIsEditUserModalOpen(false)}} className="b_button" type="button">Close</button>
                         </div>
                       </form>

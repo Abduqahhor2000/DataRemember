@@ -22,3 +22,25 @@ export const clearTypeName = () => {
         type: actionTypes.CLEAR_TYPE_NAME,
     }
 }
+export const addClientData = (payload) => {
+    return {
+        payload,
+        type: actionTypes.ADD_CLIENT_DATA,
+    }
+}
+export const clearClientData = () => {
+    return {
+        type: actionTypes.CLEAR_CLIENT_DATA,
+    }
+}
+export const addTypesData = (payload) => {
+    return {
+        payload,
+        type: actionTypes.ADD_TYPES_DATA,
+    }
+}
+export const clearTypesData = () => {
+    return {
+        type: actionTypes.CLEAR_TYPES_DATA,
+    }
+}

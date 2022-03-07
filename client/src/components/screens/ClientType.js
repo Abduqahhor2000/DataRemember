@@ -3,28 +3,28 @@ import axios from "axios";
 import "./user.scss";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { clearUserData, addTypeName } from "../../store/actions/userDataAction"
+import { addClientData } from "../../store/actions/userDataAction"
 import { FaListUl } from 'react-icons/fa'
 import { AiFillShopping } from 'react-icons/ai'
 import AddClientModal from "../modal/AddClientModal";
-import EditClientTypeModal from "../modal/EditClientTypeModal";
-import DeleteClientTypeModal from "../modal/DeleteClientTypeModal";
-import EditUserModal from "../modal/EditUserModal";
+import EditClientModal from "../modal/EditClientModal";
+import DeleteClientModal from "../modal/DeleteClientModal";
 
 const ClientType = () => {
     const State_User = useSelector(state => state.user.user)
     const State_Type = useSelector(state => state.typename.typename)
     const dispatch = useDispatch()
-    const [effect, setEffect] = useState(0)
     const navigate = useNavigate();
+    const [effect, setEffect] = useState(0)
     const [clients, setClients] = useState([])
-    const [typeID, setTypeID] = useState("")
     const [isAddClientModalOpen, setIsAddClientModalOpen] = useState(false)
-    const [isEditTypeModalOpen, setIsEditTypeModalOpen] = useState(false)
-    const [isDeleteTypeModalOpen, setIsDeleteTypeModalOpen] = useState(false)
-    const [isEditUserModalOpen, setIsEditUserModalOpen] = useState(false)
-    const [typeName, setTypeName] = useState("")
+    const [isEditClientModalOpen, setIsEditClientModalOpen] = useState(false)
+    const [isDeleteClientModalOpen, setIsDeleteClientModalOpen] = useState(false)
     const [getAllType, setGetAllType] = useState(false)
+    const [clientID, setClientID] = useState("")
+    const [fullName, setFullName] = useState("")
+    const [phoneNumber, setPhoneNumber] = useState("")
+    const [bio, setBio] = useState("")
     
     useEffect(() => {
       const fetchPrivateDate = async () => {
@@ -66,23 +66,17 @@ const ClientType = () => {
                 <div className="panel">
                   <div className="name">
                    <span className="icon"><FaListUl/></span>
-                   <span className="text">{}</span>
+                   <span className="text">{State_Type}</span>
                   </div>
                   <div className="buttons">
                       <div className="add_type">
-                        <button onClick={()=>{setIsAddClientModalOpen(true)}} type="button">+Add Type</button>
-                      </div>
-                      <div className="edit_user">
-                        <button onClick={()=>{setIsEditUserModalOpen(true)}} >Edit User</button>
-                      </div>
-                      <div className="log_out">
-                        <button onClick={()=>{dispatch(clearUserData())}}>Log Out</button>
+                        <button onClick={()=>{setIsAddClientModalOpen(true)}} type="button">+Add Client</button>
                       </div>
                   </div>
                 </div>
                 <div className="types">
-                  {!getAllType ?  <div class="loadingio-spinner-spinner-0udingbvrrcc">
-                  <div class="ldio-3opmt1mq4co">
+                  {!getAllType ?  <div className="loadingio-spinner-spinner-0udingbvrrcc">
+                  <div className="ldio-3opmt1mq4co">
                       <div></div>
                       <div></div>
                       <div></div>
@@ -99,41 +93,47 @@ const ClientType = () => {
                 </div> : clients.map(item => {
                     return (
                       <div className="type" key={item._id}>
-                        <div onClick={()=>{dispatch(addTypeName(item.clientType)); navigate("/client")}} className="type_left">
+                        <div onClick={()=>{dispatch(addClientData(item)); navigate("/client")}} className="type_left">
                           <div className="type_icon"><AiFillShopping/></div>
-                          <div className="type_name">{item.clientType}</div>
-                          <div className="quality">{item.quality}</div>
+                          <div className="type_name">{item.fullName}</div>
+                          <div className="quality">{item.phoneNumber}</div>
                         </div>
                         <div className="type_buttons">
-                          <button onClick={() => {setTypeID(item._id); setTypeName(item.clientType); setIsEditTypeModalOpen(true)}} type="button" className="edit_type">Edit</button>
-                          <button onClick={() => {setTypeID(item._id); setTypeName(item.clientType); setIsDeleteTypeModalOpen(true)}} type="button" className="delete_type">Delete</button>
+                          <button type="button" className="edit_type"
+                            onClick={ () => {
+                                setClientID(item._id);
+                                setFullName(item.fullName); 
+                                setBio(item.bio);
+                                setPhoneNumber(item.phoneNumber)
+                                setIsEditClientModalOpen(true)}}
+                          >Edit</button>
+                          <button onClick={() => {setClientID(item._id); setFullName(item.fullName); setIsDeleteClientModalOpen(true)}} type="button" className="delete_type">Delete</button>
                         </div>
                       </div>
                     )
                   })}
-                </div>
+                </div> 
             </div>
             { isAddClientModalOpen ?  <AddClientModal
                                       setIsAddClientModalOpen={setIsAddClientModalOpen} 
                                       setEffect={setEffect} 
                                       effect={effect}
                                     /> : null }
-            { isEditTypeModalOpen ? <EditClientTypeModal
-                                      setIsEditTypeModalOpen={setIsEditTypeModalOpen} 
-                                      typeName={typeName}
-                                      typeID={typeID}
+            { isEditClientModalOpen ? <EditClientModal
+                                      setIsEditClientModalOpen={setIsEditClientModalOpen} 
+                                      _fullName={fullName}
+                                      _phoneNumber={phoneNumber}
+                                      _bio={bio}
+                                      clientID={clientID}
                                       setEffect={setEffect} 
                                       effect={effect}
                                     /> : null }
-            { isDeleteTypeModalOpen ? <DeleteClientTypeModal
-                                        setIsDeleteTypeModalOpen={setIsDeleteTypeModalOpen}
-                                        typeID={typeID}
-                                        typeName={typeName}
+            { isDeleteClientModalOpen ? <DeleteClientModal
+                                        setIsDeleteClientModalOpen={setIsDeleteClientModalOpen}
+                                        clientID={clientID}
+                                        fullName={fullName}
                                         setEffect={setEffect} 
                                         effect={effect}
-                                      /> : null }
-            { isEditUserModalOpen ? <EditUserModal
-                                        setIsEditUserModalOpen={setIsEditUserModalOpen}
                                       /> : null }
         </>
     )

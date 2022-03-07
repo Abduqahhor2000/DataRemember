@@ -85,7 +85,7 @@ exports.updateclient = async function (req, res, next) {
         })
         if(!clientTypes2){ 
             console.log(clientTypes2)
-            return next( new ErrorResponse("Mijoszning BUnday turini avval kiritmagansiz. oldin kiriting uni!"))
+            return next( new ErrorResponse("Mijozning Bunday turini avval kiritmagansiz. oldin kiriting!"))
         }
 
         try{

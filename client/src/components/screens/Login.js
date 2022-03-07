@@ -7,7 +7,6 @@ import "./login.scss";
 
 const Login = () => {
   const State_User = useSelector(state => state.user.user)
-  const [maunt, setMaunt] = useState(false)
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const [email, setEmail] = useState("");

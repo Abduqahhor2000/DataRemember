@@ -2,5 +2,9 @@ export const CLEAR_USER_DATA = "CLEAR_USER_ID";
 export const ADD_USER_DATA = "ADD_USER_ID";
 export const CLEAR_TYPE_NAME = "CLEAR_TYPE_NAME";
 export const ADD_TYPE_NAME = "ADD_TYPE_NAME";
+export const CLEAR_CLIENT_DATA = "CLEAR_CLIENT_DATA";
+export const ADD_CLIENT_DATA = "ADD_CLIENT_DATA";
+export const CLEAR_TYPES_DATA = "CLEAR_TYPES_DATA";
+export const ADD_TYPES_DATA = "ADD_TYPES_DATA";
 
 

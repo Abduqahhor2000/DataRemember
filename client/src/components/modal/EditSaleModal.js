@@ -5,17 +5,19 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import "./addClientTypeModal.scss"
 
-const EditClientTypeModal = ({setIsEditTypeModalOpen, typeID, typeName, setEffect, effect}) => {
+const EditClientModal = ({setIsEditClientModalOpen, clientID, _fullName, _bio, _phoneNumber, setEffect, effect}) => {
     const State_User = useSelector(state => state.user.user)
-    const [clientType, setClientType] = useState(typeName)
-    const [addTypeError, setAddTypeError] = useState("")
+    const State_Type = useSelector(state => state.typename.typename)
+    const [fullName, setFullName] = useState(_fullName)
+    const [phoneNumber, setPhoneNumber] = useState(_phoneNumber)
+    const [bio, setBio] = useState(_bio)
+    const [editClientError, setEditClientError] = useState("")
     const [zipCode, setZipCode] = useState("")
     const [isLoading, setIsLoading] = useState(false)
     const [isAddTrue, setIsAddTrue] = useState(false)
 
-    const deleteTypeHendler = async (e) => {
-        console.log(clientType)
-        setAddTypeError(false)
+    const editClientHendler = async (e) => {
+        setEditClientError(false)
         setIsLoading(true)
         e.preventDefault();
             try{
@@ -24,10 +26,13 @@ const EditClientTypeModal = ({setIsEditTypeModalOpen, typeID, typeName, setEffec
                       "Content-Type": "application/json",
                     },
                   };
-                const data = await axios.put(`/api/auth/client_type/${typeID}`, { 
+                const data = await axios.put(`/api/client/${clientID}`, { 
                     sellerID: State_User.user._id,
-                    clientType,
-                    zipCode
+                    clientType: State_Type,
+                    zipCode,
+                    fullName,
+                    bio,
+                    phoneNumber,
                 }, config)
               console.log(data)
               setEffect(effect +1)
@@ -35,32 +40,47 @@ const EditClientTypeModal = ({setIsEditTypeModalOpen, typeID, typeName, setEffec
               setIsAddTrue(true)
               setTimeout(()=>{
                 setIsAddTrue(false)
-                setIsEditTypeModalOpen(false)
+                setIsEditClientModalOpen(false)
               }, 2000)
               setZipCode("")
             }catch(err){
               setIsLoading(false)
-              setAddTypeError("Malumotlarni to'ldirishda xatolikka yo'l qo'ydingiz yoki bu bo'lim allaqachon o'chirilgan bolishi mumkin. Agar unday bo'lmasa, serverda xatolik mavjut!")
+              setEditClientError("Malumotlarni to'ldirishda xatolikka yo'l qo'ydingiz yoki bu bo'lim allaqachon o'chirilgan bolishi mumkin. Agar unday bo'lmasa, serverda xatolik mavjut!")
               setTimeout(()=>{
-                setAddTypeError("")
+                setEditClientError("")
               }, 15000)
             }
       }
 
     return (
-        <ModalContainer setIsModalOpen={setIsEditTypeModalOpen} >
+        <ModalContainer setIsModalOpen={setIsEditClientModalOpen} >
             <div className="addType_row">
-                <b>{typeName}</b>
-                <form onSubmit={deleteTypeHendler}>
-                        <label htmlFor="clientType">Client type name:</label>
+                <form onSubmit={editClientHendler}>
+                        <label htmlFor="fullName">Client Name:</label>
                         <input
                           type="text" 
                           required 
                           minLength={4}
-                          id="clientType"
-                          placeholder="Enter Client Type Name"
-                          value={clientType}
-                          onChange={(e) => setClientType(e.target.value)}
+                          id="fullName"
+                          placeholder="Enter Client Name"
+                          value={fullName}
+                          onChange={(e) => setFullName(e.target.value)}
+                        />
+                        <label htmlFor="phoneNumber">Phone Number:</label>
+                        <input
+                          type="tel" 
+                          minLength={4}
+                          id="phoneNumber"
+                          placeholder="Enter Phone Number"
+                          value={phoneNumber}
+                          onChange={(e) => setPhoneNumber(e.target.value)}
+                        />
+                        <label htmlFor="bio">Bio:</label>
+                        <textarea style={{"width": "100% !important", "height": "100px"}}
+                          id="bio"
+                          placeholder="Bu yerda siz mijoz haqida eslatmalar yozib qoldirishingiz mumkin..."
+                          value={bio}
+                          onChange={(e) => setBio(e.target.value)}
                         />
                         <label htmlFor="zipcode">Zip Code:</label>
                         <input
@@ -81,11 +101,11 @@ const EditClientTypeModal = ({setIsEditTypeModalOpen, typeID, typeName, setEffec
                                        </div>
                                      </div> : null}
                         <div className="message">
-                          {addTypeError ? <div className="red_alert">{addTypeError}</div> : null}
+                          {editClientError ? <div className="red_alert">{editClientError}</div> : null}
                         </div>
                         <div className="button_list">
                           <button className="b_submit" type="submit">{isLoading ? <div className="lds-ring"><div></div><div></div><div></div><div></div></div> :"Edit"}</button>
-                          <button onClick={() => {setIsEditTypeModalOpen(false)}} className="b_button" type="button">Close</button>
+                          <button onClick={() => {setIsEditClientModalOpen(false)}} className="b_button" type="button">Close</button>
                         </div>
                       </form>
             </div>
@@ -93,4 +113,4 @@ const EditClientTypeModal = ({setIsEditTypeModalOpen, typeID, typeName, setEffec
     )
 }
 
-export default EditClientTypeModal;
+export default EditClientModal;

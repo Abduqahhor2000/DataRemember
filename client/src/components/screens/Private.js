@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import "./private.scss";
-import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { clearUserData } from "../../store/actions/userDataAction";
 
 const Private = () => {
   const State_User = useSelector( state => state.user.user)
   const dispatch = useDispatch()
-  const history = useLocation();
+  const history = useNavigate();
   const [error, setError] = useState("");
   const [privateData, setPrivateData] = useState("");
 
@@ -37,7 +37,7 @@ const Private = () => {
     };
 
     fetchPrivateDate();
-  }, [history]);
+  }, [history, State_User, dispatch]);
   return error ? (
     <><span className="error-message">{error}</span></>
   ) : (
