@@ -69,7 +69,7 @@ exports.updateconvert = async function (req, res, next) {
             return next( new ErrorResponse("Sotuvchi va mijoz o'rtasida bo'liqlik topilmadi!"))
         }
         const convert = await Convert.findById(convertID)
-        if(!(convert.convertType === convertType)){
+        if(convert.convertType !== convertType){
             return next( new ErrorResponse("Xatolik! Almashinuv turini o'zgartirib bo'lmaydi."))
         }
         console.log(user, client, convert)

@@ -9,7 +9,8 @@ router.route("/get").post(getclients)
 router.route("/:clientID").delete(deleteclient).put(updateclient)
 router.route("/convert").post(addconvert)
 router.route("/convert/get").post(getconverts)
-router.route("/convert/:convertID").put(updateconvert).delete(deleteconvert)
+router.route("/convert/:convertID").delete(deleteconvert)
+router.route("/convert/:convertID/update").put(updateconvert)
 router.route("/stat_client").get(stat_client)
 
 module.exports = router

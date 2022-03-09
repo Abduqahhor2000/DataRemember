@@ -19,18 +19,17 @@ const EditSaleModal = ({setIsEditSaleModalOpen, convertID, _productName, _produc
     const [isTrue, setIsTrue] = useState(false)
 
     const editSaleHendler = async (e) => {
-      console.log(convertID, productName, productType, price, quality)
+      console.log(convertID, productName, productType, State_Client._id, State_User.user._id, zipCode, price, quality)
 
         setError(false)
         setIsLoading(true)
         e.preventDefault();
             try{
-                const config = {
-                    headers: {
+                const data = await axios.post(`/api/client/convert/${convertID}/update`, { 
+                  headers: {
                       "Content-Type": "application/json",
-                    },
-                  };
-                const data = await axios.put(`/api/client/convert/${convertID}`, { 
+                  },
+                  data: {
                     sellerID: State_User.user._id,
                     clientType: State_Client._id,
                     convertType: "sales",
@@ -39,7 +38,7 @@ const EditSaleModal = ({setIsEditSaleModalOpen, convertID, _productName, _produc
                     quality,
                     price,
                     zipCode,
-                }, config)
+                  }})
               console.log(data)
               setEffect(effect +1)
               setIsLoading(false)
