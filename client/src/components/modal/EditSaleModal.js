@@ -5,82 +5,97 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import "./addClientTypeModal.scss"
 
-const EditClientModal = ({setIsEditClientModalOpen, clientID, _fullName, _bio, _phoneNumber, setEffect, effect}) => {
+const EditSaleModal = ({setIsEditSaleModalOpen, convertID, _productName, _productType, _price, _quality, setEffect, effect}) => {
+  console.log(convertID, _productName, _productType, _price, _quality)
     const State_User = useSelector(state => state.user.user)
-    const State_Type = useSelector(state => state.typename.typename)
-    const [fullName, setFullName] = useState(_fullName)
-    const [phoneNumber, setPhoneNumber] = useState(_phoneNumber)
-    const [bio, setBio] = useState(_bio)
-    const [editClientError, setEditClientError] = useState("")
+    const State_Client = useSelector(state => state.client.client)
+    const [productName, setProductName] = useState(_productName)
+    const [productType, setProductType] = useState(_productType)
+    const [price, setPrice] = useState(_price)
+    const [quality, setQuality] = useState(_quality)
     const [zipCode, setZipCode] = useState("")
+    const [error, setError] = useState("")
     const [isLoading, setIsLoading] = useState(false)
-    const [isAddTrue, setIsAddTrue] = useState(false)
+    const [isTrue, setIsTrue] = useState(false)
 
-    const editClientHendler = async (e) => {
-        setEditClientError(false)
+    const editSaleHendler = async (e) => {
+      console.log(convertID, productName, productType, price, quality)
+
+        setError(false)
         setIsLoading(true)
         e.preventDefault();
             try{
                 const config = {
-                    header: {
+                    headers: {
                       "Content-Type": "application/json",
                     },
                   };
-                const data = await axios.put(`/api/client/${clientID}`, { 
+                const data = await axios.put(`/api/client/convert/${convertID}`, { 
                     sellerID: State_User.user._id,
-                    clientType: State_Type,
+                    clientType: State_Client._id,
+                    convertType: "sales",
+                    productName,
+                    productType,
+                    quality,
+                    price,
                     zipCode,
-                    fullName,
-                    bio,
-                    phoneNumber,
                 }, config)
               console.log(data)
               setEffect(effect +1)
               setIsLoading(false)
-              setIsAddTrue(true)
+              setIsTrue(true)
               setTimeout(()=>{
-                setIsAddTrue(false)
-                setIsEditClientModalOpen(false)
+                setIsTrue(false)
+                setIsEditSaleModalOpen(false)
               }, 2000)
               setZipCode("")
             }catch(err){
               setIsLoading(false)
-              setEditClientError("Malumotlarni to'ldirishda xatolikka yo'l qo'ydingiz yoki bu bo'lim allaqachon o'chirilgan bolishi mumkin. Agar unday bo'lmasa, serverda xatolik mavjut!")
+              setError("Malumotlarni to'ldirishda xatolikka yo'l qo'ydingiz yoki bu bo'lim allaqachon o'chirilgan bolishi mumkin. Agar unday bo'lmasa, serverda xatolik mavjut!")
               setTimeout(()=>{
-                setEditClientError("")
+                setError("")
               }, 15000)
             }
       }
 
     return (
-        <ModalContainer setIsModalOpen={setIsEditClientModalOpen} >
+        <ModalContainer setIsModalOpen={setIsEditSaleModalOpen} >
             <div className="addType_row">
-                <form onSubmit={editClientHendler}>
-                        <label htmlFor="fullName">Client Name:</label>
+                <form onSubmit={editSaleHendler}>
+                <label htmlFor="productName">Product Name:</label>
                         <input
                           type="text" 
                           required 
                           minLength={4}
-                          id="fullName"
-                          placeholder="Enter Client Name"
-                          value={fullName}
-                          onChange={(e) => setFullName(e.target.value)}
+                          id="productName"
+                          placeholder="Enter Product Name"
+                          value={productName}
+                          onChange={(e) => setProductName(e.target.value)}
                         />
-                        <label htmlFor="phoneNumber">Phone Number:</label>
+                        <label htmlFor="productType">Product Type:</label>
+                        <select name="productType" id="productType" value={productType} onChange={(e) => setProductType(e.target.value)}>
+                          <option value="N2">Oddiy nav</option>
+                          <option value="N1">Saralangan nav</option>
+                          <option value="N0">Oliy nav</option>
+                          <option value="N3">Hamyonbob nav</option>
+                        </select>
+                        <label htmlFor="price">Price:</label>
                         <input
-                          type="tel" 
-                          minLength={4}
-                          id="phoneNumber"
-                          placeholder="Enter Phone Number"
-                          value={phoneNumber}
-                          onChange={(e) => setPhoneNumber(e.target.value)}
+                          type="number" 
+                          required 
+                          id="price"
+                          placeholder="Enter Price"
+                          value={price}
+                          onChange={(e) => setPrice(e.target.value)}
                         />
-                        <label htmlFor="bio">Bio:</label>
-                        <textarea style={{"width": "100% !important", "height": "100px"}}
-                          id="bio"
-                          placeholder="Bu yerda siz mijoz haqida eslatmalar yozib qoldirishingiz mumkin..."
-                          value={bio}
-                          onChange={(e) => setBio(e.target.value)}
+                        <label htmlFor="quality">Quality:</label>
+                        <input
+                          type="number" 
+                          required 
+                          id="quality"
+                          placeholder="Enter Quality"
+                          value={quality}
+                          onChange={(e) => setQuality(e.target.value)}
                         />
                         <label htmlFor="zipcode">Zip Code:</label>
                         <input
@@ -92,7 +107,7 @@ const EditClientModal = ({setIsEditClientModalOpen, clientID, _fullName, _bio, _
                           value={zipCode}
                           onChange={(e) => setZipCode(e.target.value)}
                         />
-                        {isAddTrue ? <div className="success-checkmark">
+                        {isTrue ? <div className="success-checkmark">
                                        <div className="check-icon">
                                          <span className="icon-line line-tip"></span>
                                          <span className="icon-line line-long"></span>
@@ -101,11 +116,11 @@ const EditClientModal = ({setIsEditClientModalOpen, clientID, _fullName, _bio, _
                                        </div>
                                      </div> : null}
                         <div className="message">
-                          {editClientError ? <div className="red_alert">{editClientError}</div> : null}
+                          {error ? <div className="red_alert">{error}</div> : null}
                         </div>
                         <div className="button_list">
                           <button className="b_submit" type="submit">{isLoading ? <div className="lds-ring"><div></div><div></div><div></div><div></div></div> :"Edit"}</button>
-                          <button onClick={() => {setIsEditClientModalOpen(false)}} className="b_button" type="button">Close</button>
+                          <button onClick={() => {setIsEditSaleModalOpen(false)}} className="b_button" type="button">Close</button>
                         </div>
                       </form>
             </div>
@@ -113,4 +128,4 @@ const EditClientModal = ({setIsEditClientModalOpen, clientID, _fullName, _bio, _
     )
 }
 
-export default EditClientModal;
+export default EditSaleModal;

@@ -5,19 +5,20 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import "./addClientTypeModal.scss"
 
-const AddClientModal = ({setIsAddClientModalOpen, setEffect, effect}) => {
+const AddClientModal = ({setIsAddSaleModalOpen, setEffect, effect}) => {
     const State_User = useSelector(state => state.user.user)
-    const State_Type = useSelector(state => state.typename.typename)
-    const [addClientError, setAddClientError] = useState("")
-    const [phoneNumber, setPhoneNumber] = useState("")
-    const [fullName, setFullName] = useState("")
-    const [bio, setBio] = useState("")
+    const State_Client = useSelector(state => state.client.client)
+    const [error, setError] = useState("")
+    const [productName, setProductName] = useState("")
+    const [productType, setProductType] = useState("N2")
+    const [price, setPrice] = useState("")
+    const [quality, setQuality] = useState("")
     const [zipCode, setZipCode] = useState("")
     const [isLoading, setIsLoading] = useState(false)
     const [isAddTrue, setIsAddTrue] = useState(false)
 
-    const addClientHendler = async (e) => {
-        setAddClientError(false)
+    const addSaleHendler = async (e) => {
+        setError(false)
         setIsLoading(true)
         e.preventDefault();
             try{
@@ -26,12 +27,14 @@ const AddClientModal = ({setIsAddClientModalOpen, setEffect, effect}) => {
                   "Content-Type": "application/json",
                 },
               };
-              const data = await axios.post("/api/client", 
+              const data = await axios.post("/api/client/convert", 
                     { sellerID: State_User.user._id,
-                      clientType: State_Type,
-                      phoneNumber,
-                      fullName,
-                      bio,
+                      clientID: State_Client._id,
+                      convertType: "sales",
+                      productName,
+                      productType,
+                      price, 
+                      quality,
                       zipCode }, config)
               console.log(data)
               setEffect(effect +1)
@@ -42,42 +45,51 @@ const AddClientModal = ({setIsAddClientModalOpen, setEffect, effect}) => {
               }, 5000)
             }catch(err){
               setIsLoading(false)
-              setAddClientError("Mavjut nomlanishni qayta qo'shayotgan bo'lishingiz yoki bazi malumotlarni xato kiritgan bo'lishingiz mumkin. Agar unday bo'lmasa, serverda xatolik mavjut!")
+              setError("Mavjut nomlanishni qayta qo'shayotgan bo'lishingiz yoki bazi malumotlarni xato kiritgan bo'lishingiz mumkin. Agar unday bo'lmasa, serverda xatolik mavjut!")
               setTimeout(()=>{
-                setAddClientError("")
+                setError("")
               }, 10000)
             }
       }
 
     return (
-        <ModalContainer setIsModalOpen={setIsAddClientModalOpen} >
+        <ModalContainer setIsModalOpen={setIsAddSaleModalOpen} >
             <div className="addType_row">
-                      <form onSubmit={addClientHendler}>
-                        <label htmlFor="fullName">Client Name:</label>
+                      <form onSubmit={addSaleHendler}>
+                        <label htmlFor="productName">Product Name:</label>
                         <input
                           type="text" 
                           required 
                           minLength={4}
-                          id="fullName"
-                          placeholder="Enter Client Name"
-                          value={fullName}
-                          onChange={(e) => setFullName(e.target.value)}
+                          id="productName"
+                          placeholder="Enter Product Name"
+                          value={productName}
+                          onChange={(e) => setProductName(e.target.value)}
                         />
-                        <label htmlFor="phoneNumber">Phone Number:</label>
+                        <label htmlFor="productType">Product Type:</label>
+                        <select name="productType" id="productType" value={productType} onChange={(e) => setProductType(e.target.value)}>
+                          <option value="N2">Oddiy nav</option>
+                          <option value="N1">Saralangan nav</option>
+                          <option value="N0">Oliy nav</option>
+                          <option value="N3">Hamyonbob nav</option>
+                        </select>
+                        <label htmlFor="price">Price:</label>
                         <input
-                          type="tel" 
-                          minLength={4}
-                          id="phoneNumber"
-                          placeholder="Enter Phone Number"
-                          value={phoneNumber}
-                          onChange={(e) => setPhoneNumber(e.target.value)}
+                          type="number" 
+                          required 
+                          id="price"
+                          placeholder="Enter Price"
+                          value={price}
+                          onChange={(e) => setPrice(e.target.value)}
                         />
-                        <label htmlFor="bio">Bio:</label>
-                        <textarea style={{"width": "100% !important", "height": "100px"}}
-                          id="bio"
-                          placeholder="Bu yerda siz mijoz haqida eslatmalar yozib qoldirishingiz mumkin..."
-                          value={bio}
-                          onChange={(e) => setBio(e.target.value)}
+                        <label htmlFor="quality">Quality:</label>
+                        <input
+                          type="number" 
+                          required 
+                          id="quality"
+                          placeholder="Enter Quality"
+                          value={quality}
+                          onChange={(e) => setQuality(e.target.value)}
                         />
                         <label htmlFor="zipcode">Zip Code:</label>
                         <input
@@ -98,18 +110,20 @@ const AddClientModal = ({setIsAddClientModalOpen, setEffect, effect}) => {
                                        </div>
                                      </div> : null}
                         <div className="message">
-                          {addClientError ? <div className="red_alert">{addClientError}</div> : null}
+                          {error ? <div className="red_alert">{error}</div> : null}
                         </div>
                         <div className="button_list">
                           <button className="b_submit" type="submit">{isLoading ? <div className="lds-ring"><div></div><div></div><div></div><div></div></div> :"Add"}</button>
                           <button className="b_reset" type="reset"
                               onClick={() => {
-                                                setFullName(""); 
+                                                setError(""); 
+                                                setPrice(""); 
+                                                setProductName(""); 
+                                                setQuality(""); 
                                                 setZipCode(""); 
-                                                setBio(""); 
-                                                setPhoneNumber("")}}
+                                              }}
                           >Clier</button>
-                          <button onClick={() => {setIsAddClientModalOpen(false)}} className="b_button" type="button">Close</button>
+                          <button onClick={() => {setIsAddSaleModalOpen(false)}} className="b_button" type="button">Close</button>
                         </div>
                       </form>
             </div>

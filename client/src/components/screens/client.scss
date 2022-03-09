@@ -1,0 +1,110 @@
+.payment{
+    margin-right: 10px;
+
+    .icon{
+        display: flex;
+        justify-content:flex-start;
+        flex-direction: row;
+        align-items: center;
+        
+        .number{
+             font-weight: 600;
+        }
+    }
+  
+    .date{
+        font-size: 12px;
+        color:rgb(48, 47, 47);
+    }
+}
+
+.payment_card{
+    background-color: rgb(150, 255, 150) !important;
+}
+
+.sales_card{
+    background-color: rgb(255, 150, 150) !important;
+}
+
+.type_left1{
+     display: flex;
+     justify-content: flex-start;
+     align-items: center;
+     flex-direction: row;
+
+    .payment1{
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        flex-direction: row;
+
+        @media (max-width: 400px) {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+    }
+
+     
+    .narxlar1{
+        display: none;
+        justify-content: flex-start;
+        flex-direction: row;
+        align-items: center;
+
+        .type_name2{
+            margin-left: 20px;
+        }
+    }
+
+    @media (max-width: 500px) {
+        align-items: flex-start;
+        flex-direction: column;
+
+        .narxlar1{
+            display: flex;
+        }
+        
+    }
+    @media (max-width: 400px) {
+        flex-direction: row;
+
+        .narxlar1{
+            display: none;
+        }
+        
+    }
+
+    .blok1{
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        flex-direction: row;
+         
+        .tur{
+            margin: 0 10px;
+
+            @media (max-width: 400px) {
+                margin-left: 0;
+            }
+        }
+
+        .narxlar{
+            margin: 0 10px;
+            display: flex;
+            justify-content: flex-start;
+            align-items: flex-start;
+            flex-direction: column;
+        
+            @media (max-width: 500px) {
+                display: none;
+            }
+            @media (max-width: 400px) {
+                display: block;
+            }
+    
+        }
+    
+    }
+}
+
+   

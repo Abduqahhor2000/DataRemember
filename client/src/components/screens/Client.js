@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import "./private.scss";
 import "./user.scss";
+import "./client.scss";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { MdPayment } from 'react-icons/md'
@@ -11,6 +11,7 @@ import AddSaleModal from "../modal/AddSaleModal";
 import EditPaymentModal from "../modal/EditPaymentModal";
 import EditSaleModal from "../modal/EditSaleModal";
 import DeleteConvertModal from "../modal/DeleteConvertModal";
+import { farmatDate, farmatNumberStr } from "./helperFuntion";
 
 const Client = () => {
   const State_User = useSelector(state => state.user.user)
@@ -24,13 +25,14 @@ const Client = () => {
   const [isEditSaleModalOpen, setIsEditSaleModalOpen] = useState(false)
   const [isEditPaymentModalOpen, setIsEditPaymentModalOpen] = useState(false)
   const [isDeleteConvertModalOpen, setIsDeleteConvertModalOpen] = useState(false)
-  const [converts, setConverts] = useState("")
+  const [converts, setConverts] = useState([])
   const [convertType, setConvertType] = useState("")
   const [productName, setProductName] = useState("")
   const [productType, setProductType] = useState("")
   const [quality, setQuality] = useState("")
   const [price, setPrice] = useState("")
   const [convertID, setConvertID] = useState("")
+  const [getAllConverts, setGetAllConverts] = useState(false)
 
   useEffect(() => {
     const fetchPrivateDate = async () => {
@@ -51,8 +53,10 @@ const Client = () => {
           clientID: State_Client._id,
         }, config);
         console.log(data)
-        setConverts(data.data);
+        setConverts(data.data.data);
+        setGetAllConverts(true)
       } catch (error) {
+        setGetAllConverts(true)
         setError("You are not authorized please login");
       }
     };
@@ -75,9 +79,8 @@ const Client = () => {
             </div>
           </div>
         </div>
-      </div>
-      <div className="types">
-        {!converts ?  
+        <div className="types">
+        {!getAllConverts ?  
         <div className="loadingio-spinner-spinner-0udingbvrrcc">
           <div className="ldio-3opmt1mq4co">
             <div></div>
@@ -94,45 +97,90 @@ const Client = () => {
             <div></div>
           </div>
         </div> : converts.map(item => {
+          console.log(item)
           return (
-            <div className="type" key={item._id}>
-              <div className="type_left">
+            <div className={`type ${item.convertType === "sales" ? "sales_card" : "payment_card"}`} key={item._id}>
+              <div className="type_left1">
                 {
-                  item.convertType === "sale" ? 
+                  item.convertType === "sales" ? 
                     <>
-                      <div className="type_icon"><MdPayment/></div>
-                      <div className="type_name">{item.productType}</div>
-                      <div className="type_name">{item.productName}</div>
-                      <div className="type_name">{item.price}</div>
-                      <div className="quality">{item.quality}</div>
-                      <div className="quality">{item.createAt}</div>
+                      <div className="payment1">  
+                        <div className="payment">
+                            <div className="icon">
+                              <MdPayment/>
+                              <div className="number"> &nbsp; {farmatNumberStr(item.sales.price * item.sales.quality)}</div>
+                            </div>
+                            <div className="date">{farmatDate(item.createAt)}</div>
+                          </div>
+                        <div className="blok1">
+                          <div className="tur">
+                            <div className="type_name3">{item.sales.productName}</div>
+                            <div className="type_name3">{
+                                item.sales.productType === "N0" ? "Oliy nav"
+                              : item.sales.productType === "N1" ? "Saralangan nav"
+                              : item.sales.productType === "N2" ? "Oddiy nav"
+                              : item.sales.productType === "N3" ? "Hamyonbob nav" : null
+                            }</div>
+                          </div>
+                          <div className="narxlar">
+                            <div className="type_name1">{item.sales.price} so'm</div>
+                            <div className="type_name2">{item.sales.quality} kg</div>
+                          </div> 
+                        </div>
+                      </div>
+                      <div className="narxlar1">
+                            <div className="type_name1">{item.sales.price} so'm</div>
+                            <div className="type_name2">{item.sales.quality} kg</div>
+                      </div> 
                     </> :
                     <>
-                      <div className="type_icon"><MdPayment/></div>
-                      <div className="quality">{item.quality}</div>
-                      <div className="quality">{item.createAt}</div>
+                      <div className="payment"> 
+                        <div className="icon">
+                          <MdPayment/>
+                          <div className="number"> &nbsp; {farmatNumberStr(item.payment.quality)}</div>  
+                        </div>
+                        <div className="date">{farmatDate(item.createAt)}</div>
+                      </div>
                     </>
                 }
               </div>
               <div className="type_buttons">
                 <button type="button" className="edit_type"
                   onClick={ () => {
-                      setConvertID(item._id);
-                      setProductName(item?.productName); 
-                      setProductType(item?.productType); 
+                      setConvertID(item._id); 
+                      setProductName(item?.sales?.productName); 
+                      setProductType(item?.sales?.productType); 
                       setConvertType(item?.convertType); 
-                      setQuality(item?.quality); 
-                      setPrice(item?.price);
-                      if(item.productType === "sale") {setIsEditSaleModalOpen(true)}
-                      else {setIsEditPaymentModalOpen(true)}
+                     
+                      setPrice(item?.sales?.price);
+                      if(item.convertType === "sales") {
+                        setIsEditSaleModalOpen(true); 
+                        setQuality(item?.sales?.quality); 
+                      }
+                      else {
+                        setIsEditPaymentModalOpen(true); 
+                        setQuality(item?.payment?.quality)
+                      }
                   }}
                 >Edit</button>
-                <button onClick={() => {setConvertID(item._id); setQuality(item.quality); setIsDeleteConvertModalOpen(true)}} type="button" className="delete_type">Delete</button>
+                <button type="button" className="delete_type" 
+                  onClick={() => {
+                    setConvertID(item._id); 
+                    setIsDeleteConvertModalOpen(true)
+                    if(item.convertType === "sales"){
+                      setQuality(item.sales.quality); 
+                    }else{
+                      setQuality(item.payment.quality)
+                    }
+                  }} 
+                >Delete</button>
               </div>
             </div>
           )
         })}
       </div>
+      </div>
+     
       { isAddSaleModalOpen ?  <AddSaleModal
                             setIsAddSaleModalOpen={setIsAddSaleModalOpen} 
                             convertType={convertType}
@@ -147,11 +195,10 @@ const Client = () => {
                         /> : null }
       { isEditSaleModalOpen ? <EditSaleModal
                           setIsEditSaleModalOpen={setIsEditSaleModalOpen} 
-                          convertType={convertType}
-                          productName={productName}
-                          productType={productType}
-                          quality={quality}
-                          price={price}
+                          _productName={productName}
+                          _productType={productType}
+                          _quality={quality}
+                          _price={price}
                           convertID={convertID}
                           setEffect={setEffect} 
                           effect={effect}
@@ -167,6 +214,7 @@ const Client = () => {
       { isDeleteConvertModalOpen ? <DeleteConvertModal
                             setIsDeleteConvertModalOpen={setIsDeleteConvertModalOpen}
                             convertID ={convertID}
+                            quality={quality}
                             setEffect={setEffect} 
                             effect={effect}
                           /> : null }

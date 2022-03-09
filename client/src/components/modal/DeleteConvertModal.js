@@ -5,24 +5,26 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import "./addClientTypeModal.scss"
 
-const DeleteClientTypeModal = ({setIsDeleteTypeModalOpen, typeID, typeName, setEffect, effect}) => {
-  console.log(typeID, "ssssssssssss")
+const DeleteConvertModal = ({setIsDeleteConvertModalOpen, convertID, quality, setEffect, effect}) => {
     const State_User = useSelector(state => state.user.user)
-    const [addTypeError, setAddTypeError] = useState("")
+    const State_Client = useSelector(state => state.client.client)
+    const [error, setError] = useState("")
     const [zipCode, setZipCode] = useState("")
     const [isLoading, setIsLoading] = useState(false)
-    const [isAddTrue, setIsAddTrue] = useState(false)
+    const [isTrue, setIsTrue] = useState(false)
+    console.log(convertID)
 
-    const deleteTypeHendler = async (e) => {
-        setAddTypeError(false)
+    const deleteConvertHendler = async (e) => {
+        setError(false)
         setIsLoading(true)
         e.preventDefault();
             try{
-              const data = await axios.delete(`/api/auth/client_type/${typeID}`,{ 
+              const data = await axios.delete(`/api/client/convert/${convertID}`,{ 
                 headers: {
                   "Content-Type": "application/json",
                 },
                 data: {
+                  clientID: State_Client._id, 
                   sellerID: State_User.user._id, 
                   zipCode
                 }
@@ -30,26 +32,26 @@ const DeleteClientTypeModal = ({setIsDeleteTypeModalOpen, typeID, typeName, setE
               console.log(data)
               setEffect(effect +1)
               setIsLoading(false)
-              setIsAddTrue(true)
+              setIsTrue(true)
               setTimeout(()=>{
-                setIsAddTrue(false)
-                setIsDeleteTypeModalOpen(false)
+                setIsTrue(false)
+                setIsDeleteConvertModalOpen(false)
               }, 2000)
               setZipCode("")
             }catch(err){
               setIsLoading(false)
-              setAddTypeError("Malumotlarni to'ldirishda xatolikka yo'l qo'ydingiz yoki bu bo'lim allaqachon o'chirilgan bolishi mumkin. Agar unday bo'lmasa, serverda xatolik mavjut!")
+              setError("Malumotlarni to'ldirishda xatolikka yo'l qo'ydingiz yoki bu bo'lim allaqachon o'chirilgan bolishi mumkin. Agar unday bo'lmasa, serverda xatolik mavjut!")
               setTimeout(()=>{
-                setAddTypeError("")
+                setError("")
               }, 15000)
             }
       }
 
     return (
-        <ModalContainer setIsModalOpen={setIsDeleteTypeModalOpen} >
+        <ModalContainer setIsModalOpen={setIsDeleteConvertModalOpen} >
             <div className="addType_row">
-                <b>{typeName}</b>
-                <form onSubmit={deleteTypeHendler}>
+                <b>{quality}</b>
+                <form onSubmit={deleteConvertHendler}>
                         <label htmlFor="zipcode">Zip Code:</label>
                         <input
                           type="password" 
@@ -60,7 +62,7 @@ const DeleteClientTypeModal = ({setIsDeleteTypeModalOpen, typeID, typeName, setE
                           value={zipCode}
                           onChange={(e) => setZipCode(e.target.value)}
                         />
-                        {isAddTrue ? <div className="success-checkmark">
+                        {isTrue ? <div className="success-checkmark">
                                        <div className="check-icon">
                                          <span className="icon-line line-tip"></span>
                                          <span className="icon-line line-long"></span>
@@ -69,11 +71,11 @@ const DeleteClientTypeModal = ({setIsDeleteTypeModalOpen, typeID, typeName, setE
                                        </div>
                                      </div> : null}
                         <div className="message">
-                          {addTypeError ? <div className="red_alert">{addTypeError}</div> : null}
+                          {error ? <div className="red_alert">{error}</div> : null}
                         </div>
                         <div className="button_list">
                           <button className="b_delete" type="submit">{isLoading ? <div className="lds-ring"><div></div><div></div><div></div><div></div></div> :"Delete"}</button>
-                          <button onClick={() => {setIsDeleteTypeModalOpen(false)}} className="b_button" type="button">Close</button>
+                          <button onClick={() => {setIsDeleteConvertModalOpen(false)}} className="b_button" type="button">Close</button>
                         </div>
                       </form>
             </div>
@@ -81,4 +83,4 @@ const DeleteClientTypeModal = ({setIsDeleteTypeModalOpen, typeID, typeName, setE
     )
 }
 
-export default DeleteClientTypeModal;
+export default DeleteConvertModal;

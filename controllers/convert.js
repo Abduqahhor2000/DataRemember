@@ -76,24 +76,22 @@ exports.updateconvert = async function (req, res, next) {
 
         try{
             if(convertType === "sales"){
-                await Convert.findOneAndUpdate({
-                    sales: {
+                convert.sales = {
                         productName, 
                         productType, 
                         price, 
                         quality, 
-                    },
-                    updateAt: new Date()
-                })
+                    };
+                convert.updateAt = new Date();
+                await convert.save()
                 res.status(201).json({success: true})
             }
             else if(convertType === "payment"){
-                await Convert.findOneAndUpdate({ 
-                    payment: {
+                convert.payment = {
                         quality, 
-                    },
-                    updateAt: new Date(),
-                })
+                    };
+                convert.updateAt = new Date();
+                await convert.save()
                 res.status(201).json({success: true})
             }
             else{
