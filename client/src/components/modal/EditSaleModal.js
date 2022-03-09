@@ -24,21 +24,21 @@ const EditSaleModal = ({setIsEditSaleModalOpen, convertID, _productName, _produc
         setError(false)
         setIsLoading(true)
         e.preventDefault();
-            try{
-                const data = await axios.post(`/api/client/convert/${convertID}/update`, { 
-                  headers: {
+        const config = {
+            headers: {
                       "Content-Type": "application/json",
-                  },
-                  data: {
-                    sellerID: State_User.user._id,
-                    clientType: State_Client._id,
-                    convertType: "sales",
-                    productName,
-                    productType,
-                    quality,
-                    price,
-                    zipCode,
-                  }})
+            },
+        }
+            try{
+                const data = await axios.post(`/api/client/convert/${convertID}/update`,  
+                 { sellerID: State_User.user._id,
+                  clientID: State_Client._id,
+                  convertType: "sales",
+                  productName,
+                  productType,
+                  price, 
+                  quality,
+                  zipCode }, config)
               console.log(data)
               setEffect(effect +1)
               setIsLoading(false)
