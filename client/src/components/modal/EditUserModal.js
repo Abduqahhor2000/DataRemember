@@ -90,61 +90,61 @@ const EditUserModal = ({setIsEditUserModalOpen}) => {
         <ModalContainer setIsModalOpen={setIsEditUserModalOpen} >
             <div className="addType_row">
                 <form onSubmit={deleteTypeHendler}>
-                        <label htmlFor="username">User Name:</label>
+                        <label htmlFor="username">Foydalanuvchi Nomi:</label>
                         <input
                           type="text" 
                           required 
                           minLength={5}
                           id="username"
-                          placeholder="Enter User Name"
+                          placeholder="Ism sharifingizni kiriting..."
                           value={username}
                           onChange={(e) => setUsername(e.target.value)}
                         />
-                        <label htmlFor="email">Email:</label>
+                        <label htmlFor="email">Elektron Pochta Manzili:</label>
                         <input
                           type="email" 
                           required 
                           minLength={6}
                           id="email"
-                          placeholder="Enter Email"
+                          placeholder="Elektron pochta manzilni kiriting..."
                           value={email}
                           onChange={(e) => setEmail(e.target.value)}
                         />
-                        <label htmlFor="newPassword">New Password: <i>o'zgartirmasangiz, bo'sh holida tashlab keting</i></label>
+                        <label htmlFor="newPassword">Yangi Parol: <i>o'zgartirmasangiz, bo'sh holida tashlab keting</i></label>
                         <input
                           type="password"
                           minLength={8}
                           id="newPassword"
-                          placeholder="Enter New Password"
+                          placeholder="Yangi parolni kiriting..."
                           value={newpassword}
                           onChange={(e) => setNewpassword(e.target.value)}
                         />
-                        <label htmlFor="newZipcode"> New Zip Code: <i>o'zgartirmasangiz, bo'sh holida tashlab keting</i></label>
+                        <label htmlFor="newZipcode"> Yangi Tastiqlash Belgisi: <i>o'zgartirmasangiz, bo'sh holida tashlab keting</i></label>
                         <input
                           type="password"  
                           minLength={6}
                           id="newZipcode"
-                          placeholder="Enter New Zip Code"
+                          placeholder="Yangi tastiqlash belgisini kiriting..."
                           value={newzipCode}
                           onChange={(e) => setNewzipCode(e.target.value)}
                         />
-                        <label htmlFor="oldPassword">Old Password:</label>
+                        <label htmlFor="oldPassword">Eski Parol:</label>
                         <input
                           type="password" 
                           required 
                           minLength={8}
                           id="oldPassword"
-                          placeholder="Enter Old Password"
+                          placeholder="Eski parolni qo'shing..."
                           value={oldpassword}
                           onChange={(e) => setOldpassword(e.target.value)}
                         />
-                        <label htmlFor="oldZipcode">Old Zip Code:</label>
+                        <label htmlFor="oldZipcode">Eski Tastiqlash Belgisi:</label>
                         <input
                           type="text" 
                           required 
                           minLength={6}
                           id="oldZipcode"
-                          placeholder="Enter Old Zip Code"
+                          placeholder="Eski tastiqlash belgisini kiriting..."
                           value={oldzipCode}
                           onChange={(e) => setOldzipCode(e.target.value)}
                         />
@@ -160,8 +160,8 @@ const EditUserModal = ({setIsEditUserModalOpen}) => {
                           {addTypeError ? <div className="red_alert">{addTypeError}</div> : null}
                         </div>
                         <div className="button_list">
-                          <button className="b_submit" type="submit">{isLoading ? <div className="lds-ring"><div></div><div></div><div></div><div></div></div> :"Edit"}</button>
-                          <button onClick={() => {setIsEditUserModalOpen(false)}} className="b_button" type="button">Close</button>
+                          <button className="b_submit" type="submit">{isLoading ? <div className="lds-ring"><div></div><div></div><div></div><div></div></div> :"Yangilash"}</button>
+                          <button onClick={() => {setIsEditUserModalOpen(false)}} className="b_button" type="button">Yopish</button>
                         </div>
                       </form>
             </div>

@@ -51,13 +51,13 @@ const DeleteClientModal = ({setIsDeleteClientModalOpen, clientID, clientName, se
             <div className="addType_row">
                 <b>{clientName}</b>
                 <form onSubmit={deleteClientHendler}>
-                        <label htmlFor="zipcode">Zip Code:</label>
+                        <label htmlFor="zipcode">Tastiqlash Belgisi:</label>
                         <input
                           type="password" 
                           required 
                           minLength={6}
                           id="zipcode"
-                          placeholder="Enter Zip Code"
+                          placeholder="Tastiqlash belgisini kiriting..."
                           value={zipCode}
                           onChange={(e) => setZipCode(e.target.value)}
                         />
@@ -73,8 +73,8 @@ const DeleteClientModal = ({setIsDeleteClientModalOpen, clientID, clientName, se
                           {deleteClientError ? <div className="red_alert">{deleteClientError}</div> : null}
                         </div>
                         <div className="button_list">
-                          <button className="b_submit" type="submit">{isLoading ? <div className="lds-ring"><div></div><div></div><div></div><div></div></div> :"Delete"}</button>
-                          <button onClick={() => {setIsDeleteClientModalOpen(false)}} className="b_button" type="button">Close</button>
+                          <button className="b_submit" type="submit">{isLoading ? <div className="lds-ring"><div></div><div></div><div></div><div></div></div> :"O'chirish"}</button>
+                          <button onClick={() => {setIsDeleteClientModalOpen(false)}} className="b_button" type="button">Yopish</button>
                         </div>
                       </form>
             </div>

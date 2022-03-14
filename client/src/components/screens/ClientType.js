@@ -28,7 +28,7 @@ const ClientType = () => {
     
     useEffect(() => {
       const fetchPrivateDate = async () => {
-          if(!State_User.token){
+          if(!State_User?.token){
               navigate("/login")
               return
           }
@@ -43,11 +43,11 @@ const ClientType = () => {
             const data = await axios.post(
                 "/api/client/get", 
                 {
-                  sellerID: State_User.user._id,
+                  sellerID: State_User?.user?._id,
                   clientType: State_Type, 
                 }, config)
                 console.log(State_User.user._id,State_Type,data)
-            setClients(data.data.data);
+            setClients(data.data.data.reverse());
             setGetAllType(true)
           } catch (error) {
             console.log(error)
@@ -70,7 +70,7 @@ const ClientType = () => {
                   </div>
                   <div className="buttons">
                       <div className="add_type">
-                        <button onClick={()=>{setIsAddClientModalOpen(true)}} type="button">+Add Client</button>
+                        <button onClick={()=>{setIsAddClientModalOpen(true)}} type="button">+Mijoz Qo'shish</button>
                       </div>
                   </div>
                 </div>
@@ -106,8 +106,8 @@ const ClientType = () => {
                                 setBio(item.bio);
                                 setPhoneNumber(item.phoneNumber)
                                 setIsEditClientModalOpen(true)}}
-                          >Edit</button>
-                          <button onClick={() => {setClientID(item._id); setFullName(item.fullName); setIsDeleteClientModalOpen(true)}} type="button" className="delete_type">Delete</button>
+                          >Yangilash</button>
+                          <button onClick={() => {setClientID(item._id); setFullName(item.fullName); setIsDeleteClientModalOpen(true)}} type="button" className="delete_type">O'chirish</button>
                         </div>
                       </div>
                     )

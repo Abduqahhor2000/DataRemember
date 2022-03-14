@@ -53,39 +53,39 @@ const AddClientModal = ({setIsAddClientModalOpen, setEffect, effect}) => {
         <ModalContainer setIsModalOpen={setIsAddClientModalOpen} >
             <div className="addType_row">
                       <form onSubmit={addClientHendler}>
-                        <label htmlFor="fullName">Client Name:</label>
+                        <label htmlFor="fullName">Mijoz Nomi:</label>
                         <input
                           type="text" 
                           required 
                           minLength={4}
                           id="fullName"
-                          placeholder="Enter Client Name"
+                          placeholder="Mijoz nomini kiriting..."
                           value={fullName}
                           onChange={(e) => setFullName(e.target.value)}
                         />
-                        <label htmlFor="phoneNumber">Phone Number:</label>
+                        <label htmlFor="phoneNumber">Telefon Raqami:</label>
                         <input
                           type="tel" 
                           minLength={4}
                           id="phoneNumber"
-                          placeholder="Enter Phone Number"
+                          placeholder="Telefon raqamini kiriting..."
                           value={phoneNumber}
                           onChange={(e) => setPhoneNumber(e.target.value)}
                         />
-                        <label htmlFor="bio">Bio:</label>
+                        <label htmlFor="bio">Malumot:</label>
                         <textarea style={{"width": "100% !important", "height": "100px"}}
                           id="bio"
                           placeholder="Bu yerda siz mijoz haqida eslatmalar yozib qoldirishingiz mumkin..."
                           value={bio}
                           onChange={(e) => setBio(e.target.value)}
                         />
-                        <label htmlFor="zipcode">Zip Code:</label>
+                        <label htmlFor="zipcode">Tastiqlash Belgisi:</label>
                         <input
                           type="password" 
                           required 
                           minLength={6}
                           id="zipcode"
-                          placeholder="Enter Zip Code"
+                          placeholder="Tastiqlash belgisini kiriting..."
                           value={zipCode}
                           onChange={(e) => setZipCode(e.target.value)}
                         />
@@ -101,15 +101,15 @@ const AddClientModal = ({setIsAddClientModalOpen, setEffect, effect}) => {
                           {addClientError ? <div className="red_alert">{addClientError}</div> : null}
                         </div>
                         <div className="button_list">
-                          <button className="b_submit" type="submit">{isLoading ? <div className="lds-ring"><div></div><div></div><div></div><div></div></div> :"Add"}</button>
+                          <button className="b_submit" type="submit">{isLoading ? <div className="lds-ring"><div></div><div></div><div></div><div></div></div> :"Qo'shish"}</button>
                           <button className="b_reset" type="reset"
                               onClick={() => {
                                                 setFullName(""); 
                                                 setZipCode(""); 
                                                 setBio(""); 
                                                 setPhoneNumber("")}}
-                          >Clier</button>
-                          <button onClick={() => {setIsAddClientModalOpen(false)}} className="b_button" type="button">Close</button>
+                          >Tozalash</button>
+                          <button onClick={() => {setIsAddClientModalOpen(false)}} className="b_button" type="button">Yopish</button>
                         </div>
                       </form>
             </div>

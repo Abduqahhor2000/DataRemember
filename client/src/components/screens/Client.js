@@ -15,7 +15,6 @@ import { farmatDate, farmatNumberStr } from "./helperFuntion";
 
 const Client = () => {
   const State_User = useSelector(state => state.user.user)
-  // const State_Type = useSelector(state => state.typename.typename)
   const State_Client = useSelector(state => state.client.client)
   const navigate = useNavigate();
   const [error, setError] = useState("");
@@ -53,7 +52,7 @@ const Client = () => {
           clientID: State_Client._id,
         }, config);
         console.log(data)
-        setConverts(data.data.data);
+        setConverts(data.data.data.reverse());
         setGetAllConverts(true)
       } catch (error) {
         setGetAllConverts(true)
@@ -61,7 +60,28 @@ const Client = () => {
       }
     };
 
+    const getStat = async function (){
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        }
+      }
+
+      try {
+        const data = await axios.post("/api/client/stat_client",{
+          clientID: State_Client._id,
+        }, config);
+        console.log(data)
+        // setConverts(da);
+      } catch (error) {
+        // setGetAllConverts(true)
+        setError("You are not authorized please login");
+      }
+    };
+    
+
     fetchPrivateDate();
+    getStat()
   }, [navigate, State_User, State_Client, effect]);
   return ( error ? <b>{error}</b> : <>
       <div className="user">
@@ -205,8 +225,7 @@ const Client = () => {
                         /> : null }
       { isEditPaymentModalOpen ? <EditPaymentModal
                           setIsEditPaymentModalOpen={setIsEditPaymentModalOpen} 
-                          convertType={convertType}
-                          quality={quality}
+                          _quality={quality}
                           convertID={convertID}
                           setEffect={setEffect} 
                           effect={effect}

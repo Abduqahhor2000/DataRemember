@@ -46,23 +46,23 @@ const AddClientTypeModal = ({setIsAddTypeModalOpen, setEffect, effect}) => {
         <ModalContainer setIsModalOpen={setIsAddTypeModalOpen} >
             <div className="addType_row">
                       <form onSubmit={addTypeHendler}>
-                        <label htmlFor="clientType">Client type name:</label>
+                        <label htmlFor="clientType">Mijozning Turi:</label>
                         <input
                           type="text" 
                           required 
                           minLength={4}
                           id="clientType"
-                          placeholder="Enter Client Type Name"
+                          placeholder="Mijozning turini kiriting..."
                           value={clientType}
                           onChange={(e) => setClientType(e.target.value)}
                         />
-                        <label htmlFor="zipcode">Zip Code:</label>
+                        <label htmlFor="zipcode">Tastiqlash Belgisi:</label>
                         <input
                           type="password" 
                           required 
                           minLength={6}
                           id="zipcode"
-                          placeholder="Enter Zip Code"
+                          placeholder="Tastiqlash belgisini kiriting..."
                           value={zipCode}
                           onChange={(e) => setZipCode(e.target.value)}
                         />
@@ -78,9 +78,9 @@ const AddClientTypeModal = ({setIsAddTypeModalOpen, setEffect, effect}) => {
                           {addTypeError ? <div className="red_alert">{addTypeError}</div> : null}
                         </div>
                         <div className="button_list">
-                          <button className="b_submit" type="submit">{isLoading ? <div className="lds-ring"><div></div><div></div><div></div><div></div></div> :"Add"}</button>
-                          <button onClick={() => {setClientType(""); setZipCode("")}} className="b_reset" type="reset">Clier</button>
-                          <button onClick={() => {setIsAddTypeModalOpen(false)}} className="b_button" type="button">Close</button>
+                          <button className="b_submit" type="submit">{isLoading ? <div className="lds-ring"><div></div><div></div><div></div><div></div></div> :"Qo'shish"}</button>
+                          <button onClick={() => {setClientType(""); setZipCode("")}} className="b_reset" type="reset">Tozalash</button>
+                          <button onClick={() => {setIsAddTypeModalOpen(false)}} className="b_button" type="button">Yopish</button>
                         </div>
                       </form>
             </div>

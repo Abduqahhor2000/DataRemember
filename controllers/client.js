@@ -15,10 +15,13 @@ exports.addclient = async function (req, res, next) {
         }
         
         try{
-            const client_type = await ClientType.findOne({clientType, sellerID})
-            if(!client_type){
-                return next( new ErrorResponse("Bunday mijoz turi mavjut emas!"))
+            if(clientType !== "standard"){
+                const client_type = await ClientType.findOne({clientType, sellerID})
+                if(!client_type){
+                    return next( new ErrorResponse("Bunday mijoz turi mavjut emas!"))
+                }
             }
+           
             const client = await Client.create({ sellerID, clientType, fullName, phoneNumber, bio })
             client_type.quality += 1 
             await client_type.save()

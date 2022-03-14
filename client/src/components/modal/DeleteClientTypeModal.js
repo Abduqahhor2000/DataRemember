@@ -50,13 +50,13 @@ const DeleteClientTypeModal = ({setIsDeleteTypeModalOpen, typeID, typeName, setE
             <div className="addType_row">
                 <b>{typeName}</b>
                 <form onSubmit={deleteTypeHendler}>
-                        <label htmlFor="zipcode">Zip Code:</label>
+                        <label htmlFor="zipcode">Tastiqlash Belgisi:</label>
                         <input
                           type="password" 
                           required 
                           minLength={6}
                           id="zipcode"
-                          placeholder="Enter Zip Code"
+                          placeholder="Tastiqlash belgisini kiriting..."
                           value={zipCode}
                           onChange={(e) => setZipCode(e.target.value)}
                         />
@@ -72,8 +72,8 @@ const DeleteClientTypeModal = ({setIsDeleteTypeModalOpen, typeID, typeName, setE
                           {addTypeError ? <div className="red_alert">{addTypeError}</div> : null}
                         </div>
                         <div className="button_list">
-                          <button className="b_delete" type="submit">{isLoading ? <div className="lds-ring"><div></div><div></div><div></div><div></div></div> :"Delete"}</button>
-                          <button onClick={() => {setIsDeleteTypeModalOpen(false)}} className="b_button" type="button">Close</button>
+                          <button className="b_delete" type="submit">{isLoading ? <div className="lds-ring"><div></div><div></div><div></div><div></div></div> :"O'chirish"}</button>
+                          <button onClick={() => {setIsDeleteTypeModalOpen(false)}} className="b_button" type="button">Yopish</button>
                         </div>
                       </form>
             </div>

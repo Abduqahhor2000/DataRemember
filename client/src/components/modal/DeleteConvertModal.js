@@ -52,13 +52,13 @@ const DeleteConvertModal = ({setIsDeleteConvertModalOpen, convertID, quality, se
             <div className="addType_row">
                 <b>{quality}</b>
                 <form onSubmit={deleteConvertHendler}>
-                        <label htmlFor="zipcode">Zip Code:</label>
+                        <label htmlFor="zipcode">Tastiqlash Belgisi:</label>
                         <input
                           type="password" 
                           required 
                           minLength={6}
                           id="zipcode"
-                          placeholder="Enter Zip Code"
+                          placeholder="Tastiqlash belgisini kiriting.."
                           value={zipCode}
                           onChange={(e) => setZipCode(e.target.value)}
                         />
@@ -74,8 +74,8 @@ const DeleteConvertModal = ({setIsDeleteConvertModalOpen, convertID, quality, se
                           {error ? <div className="red_alert">{error}</div> : null}
                         </div>
                         <div className="button_list">
-                          <button className="b_delete" type="submit">{isLoading ? <div className="lds-ring"><div></div><div></div><div></div><div></div></div> :"Delete"}</button>
-                          <button onClick={() => {setIsDeleteConvertModalOpen(false)}} className="b_button" type="button">Close</button>
+                          <button className="b_delete" type="submit">{isLoading ? <div className="lds-ring"><div></div><div></div><div></div><div></div></div> :"O'chirish"}</button>
+                          <button onClick={() => {setIsDeleteConvertModalOpen(false)}} className="b_button" type="button">Yopish</button>
                         </div>
                       </form>
             </div>

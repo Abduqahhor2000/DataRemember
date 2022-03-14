@@ -56,48 +56,48 @@ const AddClientModal = ({setIsAddSaleModalOpen, setEffect, effect}) => {
         <ModalContainer setIsModalOpen={setIsAddSaleModalOpen} >
             <div className="addType_row">
                       <form onSubmit={addSaleHendler}>
-                        <label htmlFor="productName">Product Name:</label>
+                        <label htmlFor="productName">Maxsulot Nomi:</label>
                         <input
                           type="text" 
                           required 
                           minLength={4}
                           id="productName"
-                          placeholder="Enter Product Name"
+                          placeholder="Maxsulot nomini kiriting..."
                           value={productName}
                           onChange={(e) => setProductName(e.target.value)}
                         />
-                        <label htmlFor="productType">Product Type:</label>
+                        <label htmlFor="productType">Maxsulot Navi:</label>
                         <select name="productType" id="productType" value={productType} onChange={(e) => setProductType(e.target.value)}>
                           <option value="N2">Oddiy nav</option>
                           <option value="N1">Saralangan nav</option>
                           <option value="N0">Oliy nav</option>
                           <option value="N3">Hamyonbob nav</option>
                         </select>
-                        <label htmlFor="price">Price:</label>
+                        <label htmlFor="price">Narxi:</label>
                         <input
                           type="number" 
                           required 
                           id="price"
-                          placeholder="Enter Price"
+                          placeholder="Narxini kiriting..."
                           value={price}
                           onChange={(e) => setPrice(e.target.value)}
                         />
-                        <label htmlFor="quality">Quality:</label>
+                        <label htmlFor="quality">Qiymati:</label>
                         <input
                           type="number" 
                           required 
                           id="quality"
-                          placeholder="Enter Quality"
+                          placeholder="Qiymatini kiriting"
                           value={quality}
                           onChange={(e) => setQuality(e.target.value)}
                         />
-                        <label htmlFor="zipcode">Zip Code:</label>
+                        <label htmlFor="zipcode">Tastiqlash Belgisi:</label>
                         <input
                           type="password" 
                           required 
                           minLength={6}
                           id="zipcode"
-                          placeholder="Enter Zip Code"
+                          placeholder="Tastiqlash belgisini kiriting..."
                           value={zipCode}
                           onChange={(e) => setZipCode(e.target.value)}
                         />
@@ -113,7 +113,7 @@ const AddClientModal = ({setIsAddSaleModalOpen, setEffect, effect}) => {
                           {error ? <div className="red_alert">{error}</div> : null}
                         </div>
                         <div className="button_list">
-                          <button className="b_submit" type="submit">{isLoading ? <div className="lds-ring"><div></div><div></div><div></div><div></div></div> :"Add"}</button>
+                          <button className="b_submit" type="submit">{isLoading ? <div className="lds-ring"><div></div><div></div><div></div><div></div></div> :"Qo'shish"}</button>
                           <button className="b_reset" type="reset"
                               onClick={() => {
                                                 setError(""); 
@@ -122,8 +122,8 @@ const AddClientModal = ({setIsAddSaleModalOpen, setEffect, effect}) => {
                                                 setQuality(""); 
                                                 setZipCode(""); 
                                               }}
-                          >Clier</button>
-                          <button onClick={() => {setIsAddSaleModalOpen(false)}} className="b_button" type="button">Close</button>
+                          >Tozalash</button>
+                          <button onClick={() => {setIsAddSaleModalOpen(false)}} className="b_button" type="button">Yopish</button>
                         </div>
                       </form>
             </div>

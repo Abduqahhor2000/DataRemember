@@ -36,7 +36,7 @@ const User = () => {
     
           try {
             const data = await axios.post("/api/auth/getclient_type", {sellerID: State_User.user._id}, config)
-            setClient_type(data.data.data);
+            setClient_type(data.data.data.reverse());
             dispatch(addTypesData(data.data.data))
             setGetAllType(true)
           } catch (error) {
@@ -86,7 +86,15 @@ const User = () => {
                       <div></div>
                       <div></div>
                   </div>
-                </div> : client_type.map(item => {
+                </div> 
+                : <>
+                  <div className="type" key={"standard"}>
+                        <div onClick={()=>{dispatch(addTypeName("standard")); navigate("/client-type")}} className="type_left">
+                          <div className="type_icon"><FaListUl/></div>
+                          <div className="type_name">standard</div>
+                        </div>
+                  </div>
+                  {client_type.map(item => {
                     return (
                       <div className="type" key={item._id}>
                         <div onClick={()=>{dispatch(addTypeName(item.clientType)); navigate("/client-type")}} className="type_left">
@@ -101,6 +109,7 @@ const User = () => {
                       </div>
                     )
                   })}
+                </>}
                 </div>
             </div>
             { isAddTypeModalOpen ?  <AddClientTypeModal

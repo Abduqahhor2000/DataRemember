@@ -61,48 +61,48 @@ const EditSaleModal = ({setIsEditSaleModalOpen, convertID, _productName, _produc
         <ModalContainer setIsModalOpen={setIsEditSaleModalOpen} >
             <div className="addType_row">
                 <form onSubmit={editSaleHendler}>
-                <label htmlFor="productName">Product Name:</label>
+                <label htmlFor="productName">Maxsulot Nomi:</label>
                         <input
                           type="text" 
                           required 
                           minLength={4}
                           id="productName"
-                          placeholder="Enter Product Name"
+                          placeholder="Maxsulot nomini kiriting..."
                           value={productName}
                           onChange={(e) => setProductName(e.target.value)}
                         />
-                        <label htmlFor="productType">Product Type:</label>
+                        <label htmlFor="productType">Maxsulot Navi:</label>
                         <select name="productType" id="productType" value={productType} onChange={(e) => setProductType(e.target.value)}>
                           <option value="N2">Oddiy nav</option>
                           <option value="N1">Saralangan nav</option>
                           <option value="N0">Oliy nav</option>
                           <option value="N3">Hamyonbob nav</option>
                         </select>
-                        <label htmlFor="price">Price:</label>
+                        <label htmlFor="price">Narxi:</label>
                         <input
                           type="number" 
                           required 
                           id="price"
-                          placeholder="Enter Price"
+                          placeholder="Narxini kiriting..."
                           value={price}
                           onChange={(e) => setPrice(e.target.value)}
                         />
-                        <label htmlFor="quality">Quality:</label>
+                        <label htmlFor="quality">Miqdori:</label>
                         <input
                           type="number" 
                           required 
                           id="quality"
-                          placeholder="Enter Quality"
+                          placeholder="Miqdorini kiriting..."
                           value={quality}
                           onChange={(e) => setQuality(e.target.value)}
                         />
-                        <label htmlFor="zipcode">Zip Code:</label>
+                        <label htmlFor="zipcode">Tastiqlash Belgisi:</label>
                         <input
                           type="password" 
                           required 
                           minLength={6}
                           id="zipcode"
-                          placeholder="Enter Zip Code"
+                          placeholder="Tastiqlash belgisini kiriting..."
                           value={zipCode}
                           onChange={(e) => setZipCode(e.target.value)}
                         />
@@ -118,8 +118,8 @@ const EditSaleModal = ({setIsEditSaleModalOpen, convertID, _productName, _produc
                           {error ? <div className="red_alert">{error}</div> : null}
                         </div>
                         <div className="button_list">
-                          <button className="b_submit" type="submit">{isLoading ? <div className="lds-ring"><div></div><div></div><div></div><div></div></div> :"Edit"}</button>
-                          <button onClick={() => {setIsEditSaleModalOpen(false)}} className="b_button" type="button">Close</button>
+                          <button className="b_submit" type="submit">{isLoading ? <div className="lds-ring"><div></div><div></div><div></div><div></div></div> :"Yangilash"}</button>
+                          <button onClick={() => {setIsEditSaleModalOpen(false)}} className="b_button" type="button">Yopish</button>
                         </div>
                       </form>
             </div>

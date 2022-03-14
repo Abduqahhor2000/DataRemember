@@ -50,22 +50,22 @@ const AddPaymentModal = ({setIsAddPaymentModalOpen, setEffect, effect}) => {
         <ModalContainer setIsModalOpen={setIsAddPaymentModalOpen} >
             <div className="addType_row">
                       <form onSubmit={addPaymentHendler}>
-                        <label htmlFor="quality">Quality:</label>
+                        <label htmlFor="quality">Qiymati:</label>
                         <input
                           type="number" 
                           required 
                           id="quality"
-                          placeholder="Enter Quality"
+                          placeholder="Qiymatini kiriting..."
                           value={quality}
                           onChange={(e) => setQuality(e.target.value)}
                         />
-                        <label htmlFor="zipcode">Zip Code:</label>
+                        <label htmlFor="zipcode">Tastiqlash Belgisi:</label>
                         <input
                           type="password" 
                           required 
                           minLength={6}
                           id="zipcode"
-                          placeholder="Enter Zip Code"
+                          placeholder="Tastiqlash belgisini kiriting..."
                           value={zipCode}
                           onChange={(e) => setZipCode(e.target.value)}
                         />
@@ -81,14 +81,14 @@ const AddPaymentModal = ({setIsAddPaymentModalOpen, setEffect, effect}) => {
                           {error ? <div className="red_alert">{error}</div> : null}
                         </div>
                         <div className="button_list">
-                          <button className="b_submit" type="submit">{isLoading ? <div className="lds-ring"><div></div><div></div><div></div><div></div></div> :"Add"}</button>
+                          <button className="b_submit" type="submit">{isLoading ? <div className="lds-ring"><div></div><div></div><div></div><div></div></div> :"Qo'shish"}</button>
                           <button className="b_reset" type="reset"
                               onClick={() => {
                                   setQuality(""); 
                                   setZipCode(""); 
                               }}
-                          >Clier</button>
-                          <button onClick={() => {setIsAddPaymentModalOpen(false)}} className="b_button" type="button">Close</button>
+                          >Tozalash</button>
+                          <button onClick={() => {setIsAddPaymentModalOpen(false)}} className="b_button" type="button">Yopish</button>
                         </div>
                       </form>
             </div>
