@@ -75,7 +75,7 @@ const Client = () => {
         // setConverts(da);
       } catch (error) {
         // setGetAllConverts(true)
-        setError("You are not authorized please login");
+        console.log(error)
       }
     };
     

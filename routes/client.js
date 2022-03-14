@@ -11,6 +11,6 @@ router.route("/convert").post(addconvert)
 router.route("/convert/get").post(getconverts)
 router.route("/convert/:convertID").delete(deleteconvert)
 router.route("/convert/:convertID/update").post(updateconvert)
-router.route("/stat_client").get(stat_client)
+router.route("/stat_client").post(stat_client)
 
 module.exports = router
