@@ -113,7 +113,7 @@ exports.getconverts = async function (req, res, next) {
         }
 
         try{
-            const converts = await Convert.find({ _id: clientID, sellerID })    
+            const converts = await Convert.find({ clientID, sellerID })    
             res.status(200).json({success: true, data: converts})
         }catch(err){
             next(err)    

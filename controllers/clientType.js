@@ -14,6 +14,16 @@ exports.addclient_type = async (req, res, next) => {
         if(zipCode !== user.zipCode){
             return next(new ErrorResponse("Noto'g'ri zipcode kirittingiz", 401))
         }
+        const client_types = await ClientType.find({sellerID})
+        const doubleTypes = client_types.find(elem => {
+            if(elem.clientType === clientType){
+                return true
+            }
+            return false
+        });
+        if(doubleTypes){
+            return next(new ErrorResponse("Kechirasiz, Bunday nomda avval qo'shgansiz", 400))
+        }
 
         await ClientType.create({clientType, sellerID})
         res.status(201).json({success: true, data: "Parolni yangilash muvaffaqiyatli bajarildi!"})

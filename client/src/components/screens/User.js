@@ -60,13 +60,13 @@ const User = () => {
                   </div>
                   <div className="buttons">
                       <div className="add_type">
-                        <button onClick={()=>{setIsAddTypeModalOpen(true)}} type="button">+Add Type</button>
+                        <button onClick={()=>{setIsAddTypeModalOpen(true)}} type="button">+Yangi sahifa</button>
                       </div>
                       <div className="edit_user">
-                        <button onClick={()=>{setIsEditUserModalOpen(true)}} >Edit User</button>
+                        <button onClick={()=>{setIsEditUserModalOpen(true)}}>Yangilash</button>
                       </div>
                       <div className="log_out">
-                        <button onClick={()=>{dispatch(clearUserData())}}>Log Out</button>
+                        <button onClick={()=>{dispatch(clearUserData())}}>Chiqish</button>
                       </div>
                   </div>
                 </div>
@@ -95,8 +95,8 @@ const User = () => {
                           <div className="quality">{item.quality}</div>
                         </div>
                         <div className="type_buttons">
-                          <button onClick={() => {setTypeID(item._id); setTypeName(item.clientType); setIsEditTypeModalOpen(true)}} type="button" className="edit_type">Edit</button>
-                          <button onClick={() => {setTypeID(item._id); setTypeName(item.clientType); setIsDeleteTypeModalOpen(true)}} type="button" className="delete_type">Delete</button>
+                          <button onClick={() => {setTypeID(item._id); setTypeName(item.clientType); setIsEditTypeModalOpen(true)}} type="button" className="edit_type">Yangilash</button>
+                          <button onClick={() => {setTypeID(item._id); setTypeName(item.clientType); setIsDeleteTypeModalOpen(true)}} type="button" className="delete_type">O'chirish</button>
                         </div>
                       </div>
                     )

@@ -6,7 +6,7 @@ import { addUserData } from "../../store/actions/userDataAction";
 import "./login.scss";
 
 const Login = () => {
-  const State_User = useSelector(state => state.user.user)
+  const State_User = useSelector(state => state?.user?.user)
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const [email, setEmail] = useState("");
@@ -14,7 +14,7 @@ const Login = () => {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    if (State_User.token) {
+    if (State_User?.token) {
       navigate("/user");
       return;
     }

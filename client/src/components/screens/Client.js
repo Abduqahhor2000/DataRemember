@@ -72,10 +72,10 @@ const Client = () => {
           </div>
           <div className="buttons">
             <div className="add_type">
-              <button onClick={()=>{setIsAddSaleModalOpen(true)}} type="button">+Add Sale</button>
+              <button onClick={()=>{setIsAddSaleModalOpen(true)}} type="button">+Sotish</button>
             </div>
             <div className="add_type">
-              <button onClick={()=>{setIsAddPaymentModalOpen(true)}} type="button">+Add Payment</button>
+              <button onClick={()=>{setIsAddPaymentModalOpen(true)}} type="button">+Kirim</button>
             </div>
           </div>
         </div>
@@ -162,7 +162,7 @@ const Client = () => {
                         setQuality(item?.payment?.quality)
                       }
                   }}
-                >Edit</button>
+                >Yangilash</button>
                 <button type="button" className="delete_type" 
                   onClick={() => {
                     setConvertID(item._id); 
@@ -173,7 +173,7 @@ const Client = () => {
                       setQuality(item.payment.quality)
                     }
                   }} 
-                >Delete</button>
+                >O'chirish</button>
               </div>
             </div>
           )
