@@ -107,14 +107,13 @@ exports.updateconvert = async function (req, res, next) {
 exports.getconverts = async function (req, res, next) {
     const {sellerID, clientID} = req.body    
     try{
-        const user = await User.findById(sellerID)    
         const client = await Client.findById(clientID)    
-        if(!(client.sellerID === sellerID)){
+        if(client.sellerID !== sellerID){
             return next( new ErrorResponse("Sotuvchi va mijoz o'rtasida bo'liqlik topilmadi!"))
         }
 
         try{
-            const converts = await Convert.find({ sellerID })    
+            const converts = await Convert.find({ _id: clientID, sellerID })    
             res.status(200).json({success: true, data: converts})
         }catch(err){
             next(err)    
