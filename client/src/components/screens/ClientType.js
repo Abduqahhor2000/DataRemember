@@ -5,10 +5,14 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { addClientData } from "../../store/actions/userDataAction"
 import { FaListUl } from 'react-icons/fa'
+import { GrPrevious } from 'react-icons/gr'
 import { AiFillShopping } from 'react-icons/ai'
 import AddClientModal from "../modal/AddClientModal";
 import EditClientModal from "../modal/EditClientModal";
 import DeleteClientModal from "../modal/DeleteClientModal";
+import EditClientTypeModal from "../modal/EditClientTypeModal";
+import DeleteClientTypeModal from "../modal/DeleteClientTypeModal";
+import {UncontrolledButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem} from "reactstrap"
 
 const ClientType = () => {
     const State_User = useSelector(state => state.user.user)
@@ -20,6 +24,8 @@ const ClientType = () => {
     const [isAddClientModalOpen, setIsAddClientModalOpen] = useState(false)
     const [isEditClientModalOpen, setIsEditClientModalOpen] = useState(false)
     const [isDeleteClientModalOpen, setIsDeleteClientModalOpen] = useState(false)
+    const [isEditTypeModalOpen, setIsEditTypeModalOpen] = useState(false)
+    const [isDeleteTypeModalOpen, setIsDeleteTypeModalOpen] = useState(false)
     const [getAllType, setGetAllType] = useState(false)
     const [clientID, setClientID] = useState("")
     const [fullName, setFullName] = useState("")
@@ -44,9 +50,9 @@ const ClientType = () => {
                 "/api/client/get", 
                 {
                   sellerID: State_User?.user?._id,
-                  clientType: State_Type, 
+                  clientType: State_Type?.clientType, 
                 }, config)
-                console.log(State_User.user._id,State_Type,data)
+                console.log(State_User.user._id, State_Type, data)
             setClients(data.data.data.reverse());
             setGetAllType(true)
           } catch (error) {
@@ -64,13 +70,30 @@ const ClientType = () => {
         <>
             <div className="user">
                 <div className="panel">
-                  <div className="name">
-                   <span className="icon"><FaListUl/></span>
-                   <span className="text">{State_Type}</span>
+                  <div onClick={()=>{navigate("/user")}} style={{"cursor":"pointer"}} className="name">
+                   <span style={{"margin": "-5px 20px 0 15px"}} className="icon"><GrPrevious/></span>     
                   </div>
                   <div className="buttons">
                       <div className="add_type">
-                        <button onClick={()=>{setIsAddClientModalOpen(true)}} type="button">+Mijoz Qo'shish</button>
+                      <span className="text">{State_Type.clientType}</span> &nbsp;
+                        <UncontrolledButtonDropdown style={{"marginRight": "5px"}}>
+                            <DropdownToggle caret style={{"fontSize":"12px", "padding": "5px 5px 7px" }}> 
+                            <span style={{"tabSize" : "40px"}}>&nbsp;<FaListUl style={{"tabSize" : "40px"}}/>&nbsp;</span>
+                            </DropdownToggle>
+                            <DropdownMenu>
+                              <DropdownItem onClick={()=>{setIsAddClientModalOpen(true)}} style={{"fontSize":"12px"}} >
+                                  Yangi mijoz qo'shish
+                              </DropdownItem>
+                              <DropdownItem divider />
+                              <DropdownItem onClick={() => {setIsEditTypeModalOpen(true)}} style={{"fontSize":"12px"}}>
+                                  Guruh malumotlarini yangilash
+                              </DropdownItem>
+                              <DropdownItem divider />
+                              <DropdownItem onClick={() => {setIsDeleteTypeModalOpen(true)}} style={{"fontSize":"12px"}}>
+                                  Guruhni o'chirish
+                              </DropdownItem>
+                            </DropdownMenu>
+                        </UncontrolledButtonDropdown>
                       </div>
                   </div>
                 </div>
@@ -132,6 +155,16 @@ const ClientType = () => {
                                         setIsDeleteClientModalOpen={setIsDeleteClientModalOpen}
                                         clientID={clientID}
                                         fullName={fullName}
+                                        setEffect={setEffect} 
+                                        effect={effect}
+                                      /> : null }
+            { isEditTypeModalOpen ? <EditClientTypeModal
+                                      setIsEditTypeModalOpen={setIsEditTypeModalOpen} 
+                                      setEffect={setEffect} 
+                                      effect={effect}
+                                    /> : null }
+            { isDeleteTypeModalOpen ? <DeleteClientTypeModal
+                                        setIsDeleteTypeModalOpen={setIsDeleteTypeModalOpen}
                                         setEffect={setEffect} 
                                         effect={effect}
                                       /> : null }

@@ -26,9 +26,10 @@ const AddClientModal = ({setIsAddClientModalOpen, setEffect, effect}) => {
                   "Content-Type": "application/json",
                 },
               };
+              console.log(State_Type.clientType)
               const data = await axios.post("/api/client", 
                     { sellerID: State_User.user._id,
-                      clientType: State_Type,
+                      clientType: State_Type.clientType,
                       phoneNumber,
                       fullName,
                       bio,

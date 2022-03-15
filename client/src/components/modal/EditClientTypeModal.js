@@ -2,19 +2,21 @@ import React from "react";
 import ModalContainer from "./ModalContainer";
 import { useState } from "react";
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { useDispatch,useSelector } from "react-redux";
+import { addTypeName } from "../../store/actions/userDataAction";
 import "./addClientTypeModal.scss"
 
-const EditClientTypeModal = ({setIsEditTypeModalOpen, typeID, typeName, setEffect, effect}) => {
+const EditClientTypeModal = ({setIsEditTypeModalOpen, setEffect, effect}) => {
+    const dispatch = useDispatch();
     const State_User = useSelector(state => state.user.user)
-    const [clientType, setClientType] = useState(typeName)
+    const State_Type = useSelector(state => state.typename.typename)
+    const [clientType, setClientType] = useState(State_Type.clientType)
     const [addTypeError, setAddTypeError] = useState("")
     const [zipCode, setZipCode] = useState("")
     const [isLoading, setIsLoading] = useState(false)
     const [isAddTrue, setIsAddTrue] = useState(false)
 
     const deleteTypeHendler = async (e) => {
-        console.log(clientType)
         setAddTypeError(false)
         setIsLoading(true)
         e.preventDefault();
@@ -24,7 +26,7 @@ const EditClientTypeModal = ({setIsEditTypeModalOpen, typeID, typeName, setEffec
                       "Content-Type": "application/json",
                     },
                   };
-                const data = await axios.put(`/api/auth/client_type/${typeID}`, { 
+                const data = await axios.put(`/api/auth/client_type/${State_Type._id}`, { 
                     sellerID: State_User.user._id,
                     clientType,
                     zipCode
@@ -38,6 +40,7 @@ const EditClientTypeModal = ({setIsEditTypeModalOpen, typeID, typeName, setEffec
                 setIsEditTypeModalOpen(false)
               }, 2000)
               setZipCode("")
+              dispatch(addTypeName({clientType, _id: State_Type._id}))
             }catch(err){
               setIsLoading(false)
               setAddTypeError("Malumotlarni to'ldirishda xatolikka yo'l qo'ydingiz yoki bu bo'lim allaqachon o'chirilgan bolishi mumkin. Agar unday bo'lmasa, serverda xatolik mavjut!")
@@ -50,7 +53,7 @@ const EditClientTypeModal = ({setIsEditTypeModalOpen, typeID, typeName, setEffec
     return (
         <ModalContainer setIsModalOpen={setIsEditTypeModalOpen} >
             <div className="addType_row">
-                <b>{typeName}</b>
+                <b>{State_Type.clientType}</b>
                 <form onSubmit={deleteTypeHendler}>
                         <label htmlFor="clientType">Mijoz Turi:</label>
                         <input

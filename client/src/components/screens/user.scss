@@ -15,6 +15,7 @@
         align-items: center;
         position: fixed;
         top: 0;
+        z-index: 1;
 
         .name{
             display: flex;
@@ -24,7 +25,6 @@
             .icon{
                 margin-left: 15px;
                 font-size: x-large;
-                margin-top: 5px;
             }
             .text{
                 margin-left: 15px;
@@ -46,15 +46,11 @@
                 button{
                     height: auto;
                     padding: 8px 5px;
-                    background-color: #00cc00;
-                    color: white;
+                    // background-color: #00cc00;
+                    // color: white;
                     border-radius: 5px;
                     border: 0;
                     cursor: pointer;
-
-                    &:active{
-                        background-color: #51ff51;
-                    }
                 }
             }
 
@@ -122,7 +118,6 @@
 
                 .type_icon{
                     font-size: large;
-                    padding-top: 5px;
                     height: 100%;
                     margin: auto 0;
                 }

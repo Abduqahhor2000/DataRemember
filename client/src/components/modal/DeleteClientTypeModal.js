@@ -4,10 +4,12 @@ import { useState } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import "./addClientTypeModal.scss"
+import { useNavigate } from "react-router-dom";
 
-const DeleteClientTypeModal = ({setIsDeleteTypeModalOpen, typeID, typeName, setEffect, effect}) => {
-  console.log(typeID, "ssssssssssss")
+const DeleteClientTypeModal = ({setIsDeleteTypeModalOpen, setEffect, effect}) => {
+  const navigate = useNavigate()
     const State_User = useSelector(state => state.user.user)
+    const State_Type = useSelector(state => state.typename.typename)
     const [addTypeError, setAddTypeError] = useState("")
     const [zipCode, setZipCode] = useState("")
     const [isLoading, setIsLoading] = useState(false)
@@ -18,7 +20,7 @@ const DeleteClientTypeModal = ({setIsDeleteTypeModalOpen, typeID, typeName, setE
         setIsLoading(true)
         e.preventDefault();
             try{
-              const data = await axios.delete(`/api/auth/client_type/${typeID}`,{ 
+              const data = await axios.delete(`/api/auth/client_type/${State_Type._id}`,{ 
                 headers: {
                   "Content-Type": "application/json",
                 },
@@ -36,6 +38,7 @@ const DeleteClientTypeModal = ({setIsDeleteTypeModalOpen, typeID, typeName, setE
                 setIsDeleteTypeModalOpen(false)
               }, 2000)
               setZipCode("")
+              navigate("/user")
             }catch(err){
               setIsLoading(false)
               setAddTypeError("Malumotlarni to'ldirishda xatolikka yo'l qo'ydingiz yoki bu bo'lim allaqachon o'chirilgan bolishi mumkin. Agar unday bo'lmasa, serverda xatolik mavjut!")
@@ -48,7 +51,7 @@ const DeleteClientTypeModal = ({setIsDeleteTypeModalOpen, typeID, typeName, setE
     return (
         <ModalContainer setIsModalOpen={setIsDeleteTypeModalOpen} >
             <div className="addType_row">
-                <b>{typeName}</b>
+                <b>{State_Type.clientType}</b>
                 <form onSubmit={deleteTypeHendler}>
                         <label htmlFor="zipcode">Tastiqlash Belgisi:</label>
                         <input
