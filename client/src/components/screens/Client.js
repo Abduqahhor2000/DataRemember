@@ -32,6 +32,7 @@ const Client = () => {
   const [price, setPrice] = useState("")
   const [convertID, setConvertID] = useState("")
   const [getAllConverts, setGetAllConverts] = useState(false)
+  const [stat_client, setStat_client] = useState({sales: 1000, payment: 1000})
 
   useEffect(() => {
     const fetchPrivateDate = async () => {
@@ -71,8 +72,8 @@ const Client = () => {
         const data = await axios.post("/api/client/stat_client",{
           clientID: State_Client._id,
         }, config);
-        console.log(data)
-        // setConverts(da);
+        console.log(data, "uuugfgdfxxghu")
+        // setStat_client(data.data);
       } catch (error) {
         // setGetAllConverts(true)
         console.log(error)
@@ -100,6 +101,20 @@ const Client = () => {
           </div>
         </div>
         <div className="types">
+            <div className={`type`} key="hisob">
+                <div className="type_left1">
+                    <div className="payment"> 
+                        <div className="icon">
+                          <MdPayment/>
+                          <div className="number"> &nbsp; Haqimiz: {farmatNumberStr(stat_client?.sales - stat_client?.payment)} &nbsp; &nbsp;</div>
+                          <MdPayment/>
+                          <div className="number"> &nbsp; Sotilish: {farmatNumberStr(stat_client?.sales)} &nbsp;  &nbsp;</div>
+                          <MdPayment/>
+                          <div className="number"> &nbsp; Kirim: {farmatNumberStr(stat_client?.payment)}</div>  
+                        </div>
+                    </div>
+                </div>
+            </div>        
         {!getAllConverts ?  
         <div className="loadingio-spinner-spinner-0udingbvrrcc">
           <div className="ldio-3opmt1mq4co">
