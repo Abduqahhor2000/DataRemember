@@ -5,6 +5,8 @@ import "./client.scss";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { MdPayment } from 'react-icons/md'
+import { FcDebt, FcMoneyTransfer, FcSalesPerformance, FcBullish } from 'react-icons/fc'
+import {GrPrevious} from "react-icons/gr"
 import { AiFillShopping } from 'react-icons/ai'
 import AddPaymentModal from "../modal/AddPaymentModal";
 import AddSaleModal from "../modal/AddSaleModal";
@@ -12,6 +14,9 @@ import EditPaymentModal from "../modal/EditPaymentModal";
 import EditSaleModal from "../modal/EditSaleModal";
 import DeleteConvertModal from "../modal/DeleteConvertModal";
 import { farmatDate, farmatNumberStr } from "./helperFuntion";
+import EditClientModal from "../modal/EditClientModal";
+import DeleteClientModal from "../modal/DeleteClientModal";
+import {UncontrolledButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem} from "reactstrap";
 
 const Client = () => {
   const State_User = useSelector(state => state.user.user)
@@ -24,15 +29,16 @@ const Client = () => {
   const [isEditSaleModalOpen, setIsEditSaleModalOpen] = useState(false)
   const [isEditPaymentModalOpen, setIsEditPaymentModalOpen] = useState(false)
   const [isDeleteConvertModalOpen, setIsDeleteConvertModalOpen] = useState(false)
+  const [isEditClientModalOpen, setIsEditClientModalOpen] = useState(false)
+  const [isDeleteClientModalOpen, setIsDeleteClientModalOpen] = useState(false)
   const [converts, setConverts] = useState([])
-  const [convertType, setConvertType] = useState("")
   const [productName, setProductName] = useState("")
   const [productType, setProductType] = useState("")
   const [quality, setQuality] = useState("")
   const [price, setPrice] = useState("")
   const [convertID, setConvertID] = useState("")
   const [getAllConverts, setGetAllConverts] = useState(false)
-  const [stat_client, setStat_client] = useState({sales: 1000, payment: 1000})
+  const [stat_client, setStat_client] = useState({sales: 0, payment: 0})
 
   useEffect(() => {
     const fetchPrivateDate = async () => {
@@ -73,7 +79,7 @@ const Client = () => {
           clientID: State_Client._id,
         }, config);
         console.log(data, "uuugfgdfxxghu")
-        // setStat_client(data.data);
+        setStat_client(data.data.data);
       } catch (error) {
         // setGetAllConverts(true)
         console.log(error)
@@ -86,31 +92,45 @@ const Client = () => {
   }, [navigate, State_User, State_Client, effect]);
   return ( error ? <b>{error}</b> : <>
       <div className="user">
-        <div className="panel">
-          <div className="name">
-            <span className="icon"><AiFillShopping/></span>
-            <span className="text">{State_Client.fullName}</span>
-          </div>
+        <div className="panel">    
+          <div onClick={()=>{navigate("/client-type")}} style={{"cursor":"pointer"}} className="name">
+              <span style={{"margin": "-5px 20px 0 15px"}} className="icon"><GrPrevious/></span>     
+          </div> 
           <div className="buttons">
-            <div className="add_type">
-              <button onClick={()=>{setIsAddSaleModalOpen(true)}} type="button">+Sotish</button>
-            </div>
-            <div className="add_type">
-              <button onClick={()=>{setIsAddPaymentModalOpen(true)}} type="button">+Kirim</button>
-            </div>
+              <span className="text" style={{"marginRight":"7px"}}>{State_Client.fullName}</span>
+              <UncontrolledButtonDropdown style={{"marginRight":"10px"}}>
+                <DropdownToggle caret style={{"fontSize":"12px", "padding": "4px 3px 4px" }}>
+                  <AiFillShopping style={{"fontSize" : "20px"}}/>
+                </DropdownToggle>
+                <DropdownMenu >
+                  <DropdownItem onClick={()=>{setIsAddSaleModalOpen(true)}} style={{"fontSize" : "12px"}}>
+                    Sotuvni qo'shish
+                  </DropdownItem>
+                  <DropdownItem divider />
+                  <DropdownItem onClick={()=>{setIsAddPaymentModalOpen(true)}} style={{"fontSize" : "12px"}}>
+                    Kirimni qo'shish
+                  </DropdownItem>
+                  <DropdownItem divider />
+                  <DropdownItem  onClick={() => {setIsEditClientModalOpen(true)}} style={{"fontSize" : "12px"}}>
+                    Mijoz malumotlarini yangilash
+                  </DropdownItem>
+                  <DropdownItem divider />
+                  <DropdownItem onClick={() => {setIsDeleteClientModalOpen(true)}} style={{"fontSize" : "12px"}}>
+                    Mijozni o'chirish
+                  </DropdownItem>
+                </DropdownMenu>
+              </UncontrolledButtonDropdown>
           </div>
         </div>
         <div className="types">
             <div className={`type`} key="hisob">
-                <div className="type_left1">
-                    <div className="payment"> 
-                        <div className="icon">
-                          <MdPayment/>
-                          <div className="number"> &nbsp; Haqimiz: {farmatNumberStr(stat_client?.sales - stat_client?.payment)} &nbsp; &nbsp;</div>
-                          <MdPayment/>
-                          <div className="number"> &nbsp; Sotilish: {farmatNumberStr(stat_client?.sales)} &nbsp;  &nbsp;</div>
-                          <MdPayment/>
-                          <div className="number"> &nbsp; Kirim: {farmatNumberStr(stat_client?.payment)}</div>  
+                <div className="type_left1" style={{"width": "100%"}}>
+                    <div className="payment"style={{"width": "100%"}}> 
+                        <div className="icon" style={{"width": "100%", "flexWrap": "wrap"}}>      
+                          <div className="number" style={{"width": "50%", "fontSize" : "14px"}}><FcMoneyTransfer/> &nbsp; Haq: {farmatNumberStr(stat_client?.sales - stat_client?.payment)} &nbsp; &nbsp;</div>
+                          <div className="number" style={{"width": "50%", "fontSize" : "14px"}}><FcDebt/> &nbsp; Qarz: {farmatNumberStr(stat_client?.payment  - stat_client?.sales)} &nbsp; &nbsp;</div>
+                          <div className="number" style={{"width": "50%", "fontSize" : "14px"}}><FcBullish/> &nbsp; Sotuv: {farmatNumberStr(stat_client?.sales)} &nbsp;  &nbsp;</div>
+                          <div className="number" style={{"width": "50%", "fontSize" : "14px"}}><FcSalesPerformance/> &nbsp; Kirim: {farmatNumberStr(stat_client?.payment)}</div>  
                         </div>
                     </div>
                 </div>
@@ -180,35 +200,43 @@ const Client = () => {
                 }
               </div>
               <div className="type_buttons">
-                <button type="button" className="edit_type"
-                  onClick={ () => {
-                      setConvertID(item._id); 
-                      setProductName(item?.sales?.productName); 
-                      setProductType(item?.sales?.productType); 
-                      setConvertType(item?.convertType); 
-                     
-                      setPrice(item?.sales?.price);
-                      if(item.convertType === "sales") {
-                        setIsEditSaleModalOpen(true); 
-                        setQuality(item?.sales?.quality); 
-                      }
-                      else {
-                        setIsEditPaymentModalOpen(true); 
-                        setQuality(item?.payment?.quality)
-                      }
-                  }}
-                >Yangilash</button>
-                <button type="button" className="delete_type" 
-                  onClick={() => {
-                    setConvertID(item._id); 
-                    setIsDeleteConvertModalOpen(true)
-                    if(item.convertType === "sales"){
-                      setQuality(item.sales.quality); 
-                    }else{
-                      setQuality(item.payment.quality)
-                    }
-                  }} 
-                >O'chirish</button>
+                  <UncontrolledButtonDropdown style={{"marginRight": "5px"}}>
+                      <DropdownToggle caret style={{"fontSize":"12px", "padding": "3px 7px 2px 5px" }}> 
+                      </DropdownToggle>
+                      <DropdownMenu>
+                        <DropdownItem  
+                            onClick={ () => {
+                                setConvertID(item._id); 
+                                setProductName(item?.sales?.productName); 
+                                setProductType(item?.sales?.productType); 
+                               
+                                setPrice(item?.sales?.price);
+                                if(item.convertType === "sales") {
+                                  setIsEditSaleModalOpen(true); 
+                                  setQuality(item?.sales?.quality); 
+                                }
+                                else {
+                                  setIsEditPaymentModalOpen(true); 
+                                  setQuality(item?.payment?.quality)
+                                }
+                            }} style={{"fontSize":"12px"}} >
+                              Yangilash
+                        </DropdownItem>
+                        <DropdownItem divider />
+                        <DropdownItem 
+                            onClick={() => {
+                                setConvertID(item._id); 
+                                setIsDeleteConvertModalOpen(true)
+                                if(item.convertType === "sales"){
+                                  setQuality(item.sales.quality); 
+                                }else{
+                                  setQuality(item.payment.quality)
+                                }
+                            }}  style={{"fontSize":"12px"}} >
+                              O'chirish
+                        </DropdownItem>
+                      </DropdownMenu>
+                  </UncontrolledButtonDropdown>
               </div>
             </div>
           )
@@ -218,13 +246,11 @@ const Client = () => {
      
       { isAddSaleModalOpen ?  <AddSaleModal
                             setIsAddSaleModalOpen={setIsAddSaleModalOpen} 
-                            convertType={convertType}
                             setEffect={setEffect} 
                             effect={effect}
                         /> : null }
       { isAddPaymentModalOpen ?  <AddPaymentModal
                             setIsAddPaymentModalOpen={setIsAddPaymentModalOpen} 
-                            convertType={convertType}
                             setEffect={setEffect} 
                             effect={effect}
                         /> : null }
@@ -252,6 +278,16 @@ const Client = () => {
                             setEffect={setEffect} 
                             effect={effect}
                           /> : null }
+      { isEditClientModalOpen ? <EditClientModal
+                            setIsEditClientModalOpen={setIsEditClientModalOpen} 
+                            setEffect={setEffect} 
+                            effect={effect}
+                          /> : null }
+      { isDeleteClientModalOpen ? <DeleteClientModal
+                            setIsDeleteClientModalOpen={setIsDeleteClientModalOpen}
+                            setEffect={setEffect} 
+                            effect={effect}
+                          /> : null }                    
       </>)
 };
 

@@ -8,8 +8,6 @@ import { FaListUl } from 'react-icons/fa'
 import { GrPrevious } from 'react-icons/gr'
 import { AiFillShopping } from 'react-icons/ai'
 import AddClientModal from "../modal/AddClientModal";
-import EditClientModal from "../modal/EditClientModal";
-import DeleteClientModal from "../modal/DeleteClientModal";
 import EditClientTypeModal from "../modal/EditClientTypeModal";
 import DeleteClientTypeModal from "../modal/DeleteClientTypeModal";
 import {UncontrolledButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem} from "reactstrap"
@@ -22,15 +20,9 @@ const ClientType = () => {
     const [effect, setEffect] = useState(0)
     const [clients, setClients] = useState([])
     const [isAddClientModalOpen, setIsAddClientModalOpen] = useState(false)
-    const [isEditClientModalOpen, setIsEditClientModalOpen] = useState(false)
-    const [isDeleteClientModalOpen, setIsDeleteClientModalOpen] = useState(false)
     const [isEditTypeModalOpen, setIsEditTypeModalOpen] = useState(false)
     const [isDeleteTypeModalOpen, setIsDeleteTypeModalOpen] = useState(false)
     const [getAllType, setGetAllType] = useState(false)
-    const [clientID, setClientID] = useState("")
-    const [fullName, setFullName] = useState("")
-    const [phoneNumber, setPhoneNumber] = useState("")
-    const [bio, setBio] = useState("")
     
     useEffect(() => {
       const fetchPrivateDate = async () => {
@@ -78,20 +70,24 @@ const ClientType = () => {
                       <span className="text">{State_Type.clientType}</span> &nbsp;
                         <UncontrolledButtonDropdown style={{"marginRight": "5px"}}>
                             <DropdownToggle caret style={{"fontSize":"12px", "padding": "5px 5px 7px" }}> 
-                            <span style={{"tabSize" : "40px"}}>&nbsp;<FaListUl style={{"tabSize" : "40px"}}/>&nbsp;</span>
+                                <FaListUl style={{"fontSize" : "17px"}}/>
                             </DropdownToggle>
                             <DropdownMenu>
                               <DropdownItem onClick={()=>{setIsAddClientModalOpen(true)}} style={{"fontSize":"12px"}} >
                                   Yangi mijoz qo'shish
                               </DropdownItem>
-                              <DropdownItem divider />
-                              <DropdownItem onClick={() => {setIsEditTypeModalOpen(true)}} style={{"fontSize":"12px"}}>
-                                  Guruh malumotlarini yangilash
-                              </DropdownItem>
-                              <DropdownItem divider />
-                              <DropdownItem onClick={() => {setIsDeleteTypeModalOpen(true)}} style={{"fontSize":"12px"}}>
-                                  Guruhni o'chirish
-                              </DropdownItem>
+                              { State_Type.clientType === "standard" ? null 
+                                  : <>
+                                      <DropdownItem divider />
+                                      <DropdownItem onClick={() => {setIsEditTypeModalOpen(true)}} style={{"fontSize":"12px"}}>
+                                          Guruh malumotlarini yangilash
+                                      </DropdownItem>
+                                      <DropdownItem divider />
+                                      <DropdownItem onClick={() => {setIsDeleteTypeModalOpen(true)}} style={{"fontSize":"12px"}}>
+                                          Guruhni o'chirish
+                                      </DropdownItem>
+                                    </>
+                              }
                             </DropdownMenu>
                         </UncontrolledButtonDropdown>
                       </div>
@@ -122,15 +118,6 @@ const ClientType = () => {
                           <div className="quality">{item.phoneNumber}</div>
                         </div>
                         <div className="type_buttons">
-                          <button type="button" className="edit_type"
-                            onClick={ () => {
-                                setClientID(item._id);
-                                setFullName(item.fullName); 
-                                setBio(item.bio);
-                                setPhoneNumber(item.phoneNumber)
-                                setIsEditClientModalOpen(true)}}
-                          >Yangilash</button>
-                          <button onClick={() => {setClientID(item._id); setFullName(item.fullName); setIsDeleteClientModalOpen(true)}} type="button" className="delete_type">O'chirish</button>
                         </div>
                       </div>
                     )
@@ -142,22 +129,6 @@ const ClientType = () => {
                                       setEffect={setEffect} 
                                       effect={effect}
                                     /> : null }
-            { isEditClientModalOpen ? <EditClientModal
-                                      setIsEditClientModalOpen={setIsEditClientModalOpen} 
-                                      _fullName={fullName}
-                                      _phoneNumber={phoneNumber}
-                                      _bio={bio}
-                                      clientID={clientID}
-                                      setEffect={setEffect} 
-                                      effect={effect}
-                                    /> : null }
-            { isDeleteClientModalOpen ? <DeleteClientModal
-                                        setIsDeleteClientModalOpen={setIsDeleteClientModalOpen}
-                                        clientID={clientID}
-                                        fullName={fullName}
-                                        setEffect={setEffect} 
-                                        effect={effect}
-                                      /> : null }
             { isEditTypeModalOpen ? <EditClientTypeModal
                                       setIsEditTypeModalOpen={setIsEditTypeModalOpen} 
                                       setEffect={setEffect} 

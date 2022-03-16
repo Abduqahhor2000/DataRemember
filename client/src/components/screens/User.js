@@ -8,6 +8,7 @@ import { clearUserData, addTypeName, addTypesData } from "../../store/actions/us
 import { FaUserTie, FaListUl } from 'react-icons/fa'
 import AddClientTypeModal from "../modal/AddClientTypeModal";
 import EditUserModal from "../modal/EditUserModal";
+import AddZipCodeModal from "../modal/AddZipCodeModal";
 
 const User = () => {
     const State_User = useSelector(state => state.user.user)
@@ -17,6 +18,7 @@ const User = () => {
     const [client_type, setClient_type] = useState([])
     const [isAddTypeModalOpen, setIsAddTypeModalOpen] = useState(false)
     const [isEditUserModalOpen, setIsEditUserModalOpen] = useState(false)
+    const [isAddZipCodeModalOpen, setIsAddZipCodeModalOpen] = useState(false)
     const [getAllType, setGetAllType] = useState(false)
     
     useEffect(() => {
@@ -71,6 +73,10 @@ const User = () => {
                             Shaxsiy malumotlarni o'zgartirish
                           </DropdownItem>
                           <DropdownItem divider />
+                          <DropdownItem onClick={()=>{setIsAddZipCodeModalOpen(true)}} style={{"fontSize" : "12px"}}>
+                            Tastiqlash belgisi saqlash
+                          </DropdownItem>
+                          <DropdownItem divider />
                           <DropdownItem onClick={()=>{dispatch(clearUserData())}} style={{"fontSize" : "12px"}}>
                             Butkul chiqib ketish
                           </DropdownItem>
@@ -120,6 +126,11 @@ const User = () => {
             </div>
             { isAddTypeModalOpen ?  <AddClientTypeModal
                                       setIsAddTypeModalOpen={setIsAddTypeModalOpen} 
+                                      setEffect={setEffect} 
+                                      effect={effect}
+                                    /> : null }
+            { isAddZipCodeModalOpen ?  <AddZipCodeModal
+                                      setIsAddZipCodeModalOpen={setIsAddZipCodeModalOpen} 
                                       setEffect={setEffect} 
                                       effect={effect}
                                     /> : null }

@@ -19,7 +19,7 @@ const EditUserModal = ({setIsEditUserModalOpen}) => {
     const [isLoading, setIsLoading] = useState(false)
     const [isAddTrue, setIsAddTrue] = useState(false)
 
-    const deleteTypeHendler = async (e) => {
+    const editUserHendler = async (e) => {
         setAddTypeError(false)
         setIsLoading(true)
         e.preventDefault();
@@ -74,7 +74,7 @@ const EditUserModal = ({setIsEditUserModalOpen}) => {
             config
           );
     
-          dispatch(addUserData(data))
+          dispatch(addUserData({...data, user: {...data.user, zipcode: oldzipCode}}))
     
           // history("/private");
         } catch (error) {
@@ -89,7 +89,7 @@ const EditUserModal = ({setIsEditUserModalOpen}) => {
     return (
         <ModalContainer setIsModalOpen={setIsEditUserModalOpen} >
             <div className="addType_row">
-                <form onSubmit={deleteTypeHendler}>
+                <form onSubmit={editUserHendler}>
                         <label htmlFor="username">Foydalanuvchi Nomi:</label>
                         <input
                           type="text" 

@@ -4,10 +4,13 @@ import { useState } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import "./addClientTypeModal.scss"
+import { useNavigate } from "react-router-dom";
 
-const DeleteClientModal = ({setIsDeleteClientModalOpen, clientID, clientName, setEffect, effect}) => {
+const DeleteClientModal = ({setIsDeleteClientModalOpen, setEffect, effect}) => {
+    const navigate = useNavigate()
     const State_User = useSelector(state => state.user.user)
     const State_Type = useSelector(state => state.typename.typename)
+    const State_Client = useSelector(state => state.client.client)
     const [deleteClientError, setDeleteClientError] = useState("")
     const [zipCode, setZipCode] = useState("")
     const [isLoading, setIsLoading] = useState(false)
@@ -18,13 +21,13 @@ const DeleteClientModal = ({setIsDeleteClientModalOpen, clientID, clientName, se
         setIsLoading(true)
         e.preventDefault();
             try{
-              const data = await axios.delete(`/api/client/${clientID}`,{ 
+              const data = await axios.delete(`/api/client/${State_Client._id}`,{ 
                 headers: {
                   "Content-Type": "application/json",
                 },
                 data: {
                   sellerID: State_User.user._id, 
-                  clientType: State_Type,
+                  clientType: State_Type.clientType,
                   zipCode
                 }
               })
@@ -37,6 +40,7 @@ const DeleteClientModal = ({setIsDeleteClientModalOpen, clientID, clientName, se
                 setIsDeleteClientModalOpen(false)
               }, 2000)
               setZipCode("")
+              navigate("/client-type")
             }catch(err){
               setIsLoading(false)
               setDeleteClientError("Malumotlarni to'ldirishda xatolikka yo'l qo'ydingiz yoki bu bo'lim allaqachon o'chirilgan bolishi mumkin. Agar unday bo'lmasa, serverda xatolik mavjut!")
@@ -49,7 +53,7 @@ const DeleteClientModal = ({setIsDeleteClientModalOpen, clientID, clientName, se
     return (
         <ModalContainer setIsModalOpen={setIsDeleteClientModalOpen} >
             <div className="addType_row">
-                <b>{clientName}</b>
+                <b>{State_Client.fullName}</b>
                 <form onSubmit={deleteClientHendler}>
                         <label htmlFor="zipcode">Tastiqlash Belgisi:</label>
                         <input

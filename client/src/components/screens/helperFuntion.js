@@ -22,6 +22,9 @@ export function farmatDate(date) {
 }
 
 export function farmatNumberStr(number) {
+    if(number < 0){
+        return 0;
+    }
     const arr = number.toString().split("").reverse()
     if(arr.length > 3){
         let num = 3

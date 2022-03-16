@@ -2,15 +2,18 @@ import React from "react";
 import ModalContainer from "./ModalContainer";
 import { useState } from "react";
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import "./addClientTypeModal.scss"
+import { addClientData } from "../../store/actions/userDataAction";
 
-const EditClientModal = ({setIsEditClientModalOpen, clientID, _fullName, _bio, _phoneNumber, setEffect, effect}) => {
+const EditClientModal = ({setIsEditClientModalOpen, setEffect, effect}) => {
+    const dispatch = useDispatch()
     const State_User = useSelector(state => state.user.user)
     const State_Type = useSelector(state => state.typename.typename)
-    const [fullName, setFullName] = useState(_fullName)
-    const [phoneNumber, setPhoneNumber] = useState(_phoneNumber)
-    const [bio, setBio] = useState(_bio)
+    const State_Client = useSelector(state => state.client.client)
+    const [fullName, setFullName] = useState(State_Client.fullName)
+    const [phoneNumber, setPhoneNumber] = useState(State_Client.phoneNumber)
+    const [bio, setBio] = useState(State_Client.bio)
     const [editClientError, setEditClientError] = useState("")
     const [zipCode, setZipCode] = useState("")
     const [isLoading, setIsLoading] = useState(false)
@@ -26,9 +29,9 @@ const EditClientModal = ({setIsEditClientModalOpen, clientID, _fullName, _bio, _
                       "Content-Type": "application/json",
                     },
                   };
-                const data = await axios.put(`/api/client/${clientID}`, { 
+                const data = await axios.put(`/api/client/${State_Client._id}`, { 
                     sellerID: State_User.user._id,
-                    clientType: State_Type,
+                    clientType: State_Type.clientType,
                     zipCode,
                     fullName,
                     bio,
@@ -43,6 +46,10 @@ const EditClientModal = ({setIsEditClientModalOpen, clientID, _fullName, _bio, _
                 setIsEditClientModalOpen(false)
               }, 2000)
               setZipCode("")
+              dispatch(addClientData({...State_Client,
+                fullName,
+                bio,
+                phoneNumber,}))
             }catch(err){
               setIsLoading(false)
               setEditClientError("Malumotlarni to'ldirishda xatolikka yo'l qo'ydingiz yoki bu bo'lim allaqachon o'chirilgan bolishi mumkin. Agar unday bo'lmasa, serverda xatolik mavjut!")
