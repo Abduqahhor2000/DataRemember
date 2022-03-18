@@ -109,19 +109,13 @@ exports.updateclient = async function (req, res, next) {
             if(clientType !== client.clientType){
                 if(client.clientType !== "standard"){
                     const client_type = await ClientType.findOne({clientType: client.clientType, sellerID})
-                    if(client_type){
-                        client_type.quality -= 1 
-                        await client_type.save() 
-                    }
+                    client_type.quality -= 1 
+                    await client_type.save()   
+                }
+                if(clientType !== "standard"){
                     const client_type2 = await ClientType.findOne({clientType, sellerID})  
                     client_type2.quality += 1 
                     await client_type2.save()
-                }else{
-                    const client_type = await ClientType.findOne({clientType: client.clientType, sellerID})
-                    if(client_type){
-                        client_type.quality -= 1 
-                        await client_type.save() 
-                    }
                 }
             }
 
