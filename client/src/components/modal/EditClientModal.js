@@ -53,7 +53,9 @@ const EditClientModal = ({setIsEditClientModalOpen, setEffect, effect}) => {
                 ...State_Client,
                 fullName,
                 bio,
-                phoneNumber,}))
+                phoneNumber,
+                clientType,
+              }))
             }catch(err){
               setIsLoading(false)
               setEditClientError("Malumotlarni to'ldirishda xatolikka yo'l qo'ydingiz yoki bu bo'lim allaqachon o'chirilgan bolishi mumkin. Agar unday bo'lmasa, serverda xatolik mavjut!")
