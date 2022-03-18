@@ -88,12 +88,14 @@ exports.updateclient = async function (req, res, next) {
         if(!(user.zipCode === zipCode)){
             return next( new ErrorResponse("Zip Code noto'g'ri!"))
         }
-        const clientTypes = await ClientType.find({sellerID})
-        const clientTypes2 = clientTypes.find(function (item) {
-            return clientType === item.clientType
-        })
-        if(!clientTypes2 || clientType !== "standard"){
-            return next( new ErrorResponse("Mijozning Bunday turini avval kiritmagansiz. oldin kiriting!"))
+        if(clientType !== "standard"){
+            const clientTypes = await ClientType.find({sellerID})
+            const clientTypes2 = clientTypes.find(function (item) {
+                return clientType === item.clientType
+            })
+            if(!clientTypes2){
+                return next( new ErrorResponse("Mijozning Bunday turini avval kiritmagansiz. oldin kiriting!"))
+            }
         }
 
         try{
