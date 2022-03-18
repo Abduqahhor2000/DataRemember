@@ -92,8 +92,7 @@ exports.updateclient = async function (req, res, next) {
         const clientTypes2 = clientTypes.find(function (item) {
             return clientType === item.clientType
         })
-        if(!clientTypes2){ 
-            console.log(clientTypes2)
+        if(!clientTypes2 || clientType !== "standard"){
             return next( new ErrorResponse("Mijozning Bunday turini avval kiritmagansiz. oldin kiriting!"))
         }
 
