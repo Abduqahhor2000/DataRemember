@@ -10,15 +10,18 @@ const EditClientModal = ({setIsEditClientModalOpen, setEffect, effect}) => {
     const dispatch = useDispatch()
     const State_User = useSelector(state => state.user.user)
     const State_Type = useSelector(state => state.typename.typename)
+    const State_Types = useSelector(state => state.types.types)
     const State_Client = useSelector(state => state.client.client)
+    const [clientType, setClientType] = useState(State_Type.clientType)
     const [fullName, setFullName] = useState(State_Client.fullName)
     const [phoneNumber, setPhoneNumber] = useState(State_Client.phoneNumber)
     const [bio, setBio] = useState(State_Client.bio)
     const [editClientError, setEditClientError] = useState("")
-    const [zipCode, setZipCode] = useState("")
+    const [zipCode, setZipCode] = useState(() => State_User.user.zipCode ? State_User.user.zipCode : "")
     const [isLoading, setIsLoading] = useState(false)
     const [isAddTrue, setIsAddTrue] = useState(false)
 
+    console.log(clientType)
     const editClientHendler = async (e) => {
         setEditClientError(false)
         setIsLoading(true)
@@ -31,7 +34,7 @@ const EditClientModal = ({setIsEditClientModalOpen, setEffect, effect}) => {
                   };
                 const data = await axios.put(`/api/client/${State_Client._id}`, { 
                     sellerID: State_User.user._id,
-                    clientType: State_Type.clientType,
+                    clientType,
                     zipCode,
                     fullName,
                     bio,
@@ -46,7 +49,8 @@ const EditClientModal = ({setIsEditClientModalOpen, setEffect, effect}) => {
                 setIsEditClientModalOpen(false)
               }, 2000)
               setZipCode("")
-              dispatch(addClientData({...State_Client,
+              dispatch(addClientData({
+                ...State_Client,
                 fullName,
                 bio,
                 phoneNumber,}))
@@ -63,6 +67,31 @@ const EditClientModal = ({setIsEditClientModalOpen, setEffect, effect}) => {
         <ModalContainer setIsModalOpen={setIsEditClientModalOpen} >
             <div className="addType_row">
                 <form onSubmit={editClientHendler}>
+                        <label htmlFor="clientType">Mijoz Turi:</label>
+                        <select 
+                          id="clientType"
+                          value={clientType}
+                          onChange={(e) => setClientType(e.target.value)}
+                        >
+                          <option key="yghjfndfnddj" value="standard">standard</option>
+                          {
+                            State_Types.map(item => {
+                              if(item.clientType === clientType){
+                                return (
+                                  <>
+                                    <option key={item._id} value={item.clientType} >{item.clientType}</option>
+                                  </>
+                                )
+                              }
+                              return (
+                                <>
+                                  <option key={item._id} value={item.clientType} >{item.clientType}</option>
+                                </>
+                              )
+                             
+                            })
+                          }
+                        </select>
                         <label htmlFor="fullName">Mijoz Nomi:</label>
                         <input
                           type="text" 
@@ -89,16 +118,20 @@ const EditClientModal = ({setIsEditClientModalOpen, setEffect, effect}) => {
                           value={bio}
                           onChange={(e) => setBio(e.target.value)}
                         />
-                        <label htmlFor="zipcode">Tastiqlash Belgisi:</label>
-                        <input
-                          type="password" 
-                          required 
-                          minLength={6}
-                          id="zipcode"
-                          placeholder="Tastiqlash belgisini kiriting"
-                          value={zipCode}
-                          onChange={(e) => setZipCode(e.target.value)}
-                        />
+                       {State_User.user.zipCode ? null :
+                          <>
+                            <label htmlFor="zipcode">Tastiqlash Belgisi:</label>
+                            <input
+                              type="password" 
+                              required 
+                              minLength={6}
+                              id="zipcode"
+                              placeholder="Tastiqlash belgisini kiriting..."
+                              value={zipCode}
+                              onChange={(e) => setZipCode(e.target.value)}
+                            />
+                          </>
+                        }
                         {isAddTrue ? <div className="success-checkmark">
                                        <div className="check-icon">
                                          <span className="icon-line line-tip"></span>

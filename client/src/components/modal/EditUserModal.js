@@ -73,9 +73,16 @@ const EditUserModal = ({setIsEditUserModalOpen}) => {
             { email, password },
             config
           );
-    
-          dispatch(addUserData({...data, user: {...data.user, zipcode: oldzipCode}}))
-    
+          if(State_User.user.zipCode){
+            if(newzipCode){
+              dispatch(addUserData({...data, user: {...data.user, zipCode: newzipCode}}))
+            }else{
+              dispatch(addUserData({...data, user: {...data.user, zipCode: oldzipCode}}))
+            }
+          }else{
+            dispatch(addUserData(data))
+          }
+         
           // history("/private");
         } catch (error) {
           console.log(error);

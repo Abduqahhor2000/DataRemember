@@ -12,7 +12,7 @@ const AddClientModal = ({setIsAddClientModalOpen, setEffect, effect}) => {
     const [phoneNumber, setPhoneNumber] = useState("")
     const [fullName, setFullName] = useState("")
     const [bio, setBio] = useState("")
-    const [zipCode, setZipCode] = useState("")
+    const [zipCode, setZipCode] = useState(() => State_User.user.zipCode ? State_User.user.zipCode : "")
     const [isLoading, setIsLoading] = useState(false)
     const [isAddTrue, setIsAddTrue] = useState(false)
 
@@ -80,16 +80,20 @@ const AddClientModal = ({setIsAddClientModalOpen, setEffect, effect}) => {
                           value={bio}
                           onChange={(e) => setBio(e.target.value)}
                         />
-                        <label htmlFor="zipcode">Tastiqlash Belgisi:</label>
-                        <input
-                          type="password" 
-                          required 
-                          minLength={6}
-                          id="zipcode"
-                          placeholder="Tastiqlash belgisini kiriting..."
-                          value={zipCode}
-                          onChange={(e) => setZipCode(e.target.value)}
-                        />
+                        {State_User.user.zipCode ? null :
+                          <>
+                            <label htmlFor="zipcode">Tastiqlash Belgisi:</label>
+                            <input
+                              type="password" 
+                              required 
+                              minLength={6}
+                              id="zipcode"
+                              placeholder="Tastiqlash belgisini kiriting..."
+                              value={zipCode}
+                              onChange={(e) => setZipCode(e.target.value)}
+                            />
+                          </>
+                        }
                         {isAddTrue ? <div className="success-checkmark">
                                        <div className="check-icon">
                                          <span className="icon-line line-tip"></span>

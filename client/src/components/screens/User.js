@@ -4,7 +4,7 @@ import "./user.scss";
 import {UncontrolledButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem} from "reactstrap"
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { clearUserData, addTypeName, addTypesData } from "../../store/actions/userDataAction"
+import { clearUserData, addTypeName, addTypesData, clearTypeName, clearClientData, clearTypesData } from "../../store/actions/userDataAction"
 import { FaUserTie, FaListUl } from 'react-icons/fa'
 import AddClientTypeModal from "../modal/AddClientTypeModal";
 import EditUserModal from "../modal/EditUserModal";
@@ -77,7 +77,13 @@ const User = () => {
                             Tastiqlash belgisi saqlash
                           </DropdownItem>
                           <DropdownItem divider />
-                          <DropdownItem onClick={()=>{dispatch(clearUserData())}} style={{"fontSize" : "12px"}}>
+                          <DropdownItem style={{"fontSize" : "12px"}} 
+                              onClick={()=>{
+                                  dispatch(clearUserData())
+                                  dispatch(clearTypeName())
+                                  dispatch(clearClientData())
+                                  dispatch(clearTypesData())
+                              }} >
                             Butkul chiqib ketish
                           </DropdownItem>
                         </DropdownMenu>

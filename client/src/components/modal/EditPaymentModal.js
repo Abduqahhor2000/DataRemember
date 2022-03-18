@@ -10,7 +10,7 @@ const EditClientModal = ({setIsEditPaymentModalOpen, convertID, _quality, setEff
     const State_Client = useSelector(state => state?.client?.client)
     const [quality, setQuality] = useState(_quality)
     const [error, setError] = useState("")
-    const [zipCode, setZipCode] = useState("")
+    const [zipCode, setZipCode] = useState(() => State_User.user.zipCode ? State_User.user.zipCode : "")
     const [isLoading, setIsLoading] = useState(false)
     const [isTrue, setIsTrue] = useState(false)
 
@@ -70,16 +70,20 @@ const EditClientModal = ({setIsEditPaymentModalOpen, convertID, _quality, setEff
                           value={quality}
                           onChange={(e) => setQuality(e.target.value)}
                         />
-                        <label htmlFor="zipcode">Tastiqlash Belgisi:</label>
-                        <input
-                          type="password" 
-                          required 
-                          minLength={6}
-                          id="zipcode"
-                          placeholder="Tastiqlash belgisini kiriting..."
-                          value={zipCode}
-                          onChange={(e) => setZipCode(e.target.value)}
-                        />
+                        {State_User.user.zipCode ? null :
+                          <>
+                            <label htmlFor="zipcode">Tastiqlash Belgisi:</label>
+                            <input
+                              type="password" 
+                              required 
+                              minLength={6}
+                              id="zipcode"
+                              placeholder="Tastiqlash belgisini kiriting..."
+                              value={zipCode}
+                              onChange={(e) => setZipCode(e.target.value)}
+                            />
+                          </>
+                        }
                         {isTrue ? <div className="success-checkmark">
                                        <div className="check-icon">
                                          <span className="icon-line line-tip"></span>

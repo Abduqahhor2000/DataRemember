@@ -12,7 +12,7 @@ const DeleteClientModal = ({setIsDeleteClientModalOpen, setEffect, effect}) => {
     const State_Type = useSelector(state => state.typename.typename)
     const State_Client = useSelector(state => state.client.client)
     const [deleteClientError, setDeleteClientError] = useState("")
-    const [zipCode, setZipCode] = useState("")
+    const [zipCode, setZipCode] = useState(() => State_User.user.zipCode ? State_User.user.zipCode : "")
     const [isLoading, setIsLoading] = useState(false)
     const [isAddTrue, setIsAddTrue] = useState(false)
 
@@ -55,16 +55,20 @@ const DeleteClientModal = ({setIsDeleteClientModalOpen, setEffect, effect}) => {
             <div className="addType_row">
                 <b>{State_Client.fullName}</b>
                 <form onSubmit={deleteClientHendler}>
-                        <label htmlFor="zipcode">Tastiqlash Belgisi:</label>
-                        <input
-                          type="password" 
-                          required 
-                          minLength={6}
-                          id="zipcode"
-                          placeholder="Tastiqlash belgisini kiriting..."
-                          value={zipCode}
-                          onChange={(e) => setZipCode(e.target.value)}
-                        />
+                        {State_User.user.zipCode ? null :
+                          <>
+                            <label htmlFor="zipcode">Tastiqlash Belgisi:</label>
+                            <input
+                              type="password" 
+                              required 
+                              minLength={6}
+                              id="zipcode"
+                              placeholder="Tastiqlash belgisini kiriting..."
+                              value={zipCode}
+                              onChange={(e) => setZipCode(e.target.value)}
+                            />
+                          </>
+                        }
                         {isAddTrue ? <div className="success-checkmark">
                                        <div className="check-icon">
                                          <span className="icon-line line-tip"></span>

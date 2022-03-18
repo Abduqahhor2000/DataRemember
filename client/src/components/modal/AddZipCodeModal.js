@@ -38,7 +38,7 @@ const AddZipCodeModal = ({setIsAddZipCodeModalOpen}) => {
             setTimeout(()=>{
               setIsAddTrue(false)
             }, 3000)
-            dispatch(addUserData({...State_User, user: {...State_User.user, zipCode}}))
+            dispatch(addUserData({...State_User, user: {...State_User.user, zipCode: zipCode}}))
         }catch(err){
             setIsLoading(false)
             setAddTypeError("Malumotlarni to'ldirishda xatolikka yo'l qo'ydingiz yoki bu bo'lim allaqachon o'chirilgan bolishi mumkin. Agar unday bo'lmasa, serverda xatolik mavjut!")
@@ -63,16 +63,20 @@ const AddZipCodeModal = ({setIsAddZipCodeModalOpen}) => {
                           value={password}
                           onChange={(e) => setPassword(e.target.value)}
                         />
-                        <label htmlFor="zipcode">Tastiqlash Belgisi:</label>
-                        <input
-                          type="password" 
-                          required 
-                          minLength={6}
-                          id="zipcode"
-                          placeholder="Tastiqlash belgisini kiriting..."
-                          value={zipCode}
-                          onChange={(e) => setZipCode(e.target.value)}
-                        />
+                        {State_User.user.zipCode ? null :
+                          <>
+                            <label htmlFor="zipcode">Tastiqlash Belgisi:</label>
+                            <input
+                              type="password" 
+                              required 
+                              minLength={6}
+                              id="zipcode"
+                              placeholder="Tastiqlash belgisini kiriting..."
+                              value={zipCode}
+                              onChange={(e) => setZipCode(e.target.value)}
+                            />
+                          </>
+                        }
                         {isAddTrue ? <div className="success-checkmark">
                                        <div className="check-icon">
                                          <span className="icon-line line-tip"></span>
@@ -85,7 +89,7 @@ const AddZipCodeModal = ({setIsAddZipCodeModalOpen}) => {
                           {addTypeError ? <div className="red_alert">{addTypeError}</div> : null}
                         </div>
                         <div className="button_list">
-                          <button className="b_delete" type="submit">{isLoading ? <div className="lds-ring"><div></div><div></div><div></div><div></div></div> :"O'chirish"}</button>
+                          <button className="b_submit" type="submit">{isLoading ? <div className="lds-ring"><div></div><div></div><div></div><div></div></div> :"Saqlash"}</button>
                           <button onClick={() => {setIsAddZipCodeModalOpen(false)}} className="b_button" type="button">Yopish</button>
                         </div>
                       </form>
