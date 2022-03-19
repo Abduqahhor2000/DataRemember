@@ -86,12 +86,6 @@ const AddPaymentModal = ({setIsAddPaymentModalOpen, setEffect, effect}) => {
                         </div>
                         <div className="button_list">
                           <button className="b_submit" type="submit">{isLoading ? <div className="lds-ring"><div></div><div></div><div></div><div></div></div> :"Qo'shish"}</button>
-                          <button className="b_reset" type="reset"
-                              onClick={() => {
-                                  setQuality(""); 
-                                  setZipCode(""); 
-                              }}
-                          >Tozalash</button>
                           <button onClick={() => {setIsAddPaymentModalOpen(false)}} className="b_button" type="button">Yopish</button>
                         </div>
                       </form>

@@ -83,7 +83,6 @@ const AddClientTypeModal = ({setIsAddTypeModalOpen, setEffect, effect}) => {
                         </div>
                         <div className="button_list">
                           <button className="b_submit" type="submit">{isLoading ? <div className="lds-ring"><div></div><div></div><div></div><div></div></div> :"Qo'shish"}</button>
-                          <button onClick={() => {setClientType(""); setZipCode("")}} className="b_reset" type="reset">Tozalash</button>
                           <button onClick={() => {setIsAddTypeModalOpen(false)}} className="b_button" type="button">Yopish</button>
                         </div>
                       </form>

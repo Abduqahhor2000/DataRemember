@@ -20,6 +20,10 @@ const AddZipCodeModal = ({setIsAddZipCodeModalOpen}) => {
         setAddTypeError(false)
         setIsLoading(true)
         e.preventDefault();
+        console.log({  username: State_User.user.username,
+          email: State_User.user.email,
+          oldpassword: password,
+          oldzipCode: zipCode,})
         try{
             const config = {
                 header: {
@@ -31,6 +35,8 @@ const AddZipCodeModal = ({setIsAddZipCodeModalOpen}) => {
                 email: State_User.user.email,
                 oldpassword: password,
                 oldzipCode: zipCode,
+                newpassword: "",
+                newzipCode: "",
             }, config) 
             console.log(data, "vghgf")
             setIsLoading(false)
@@ -53,6 +59,17 @@ const AddZipCodeModal = ({setIsAddZipCodeModalOpen}) => {
             <div className="addType_row">
                 <b>{State_Type.clientType}</b>
                 <form onSubmit={editUserHendler}>
+                      
+                        <label htmlFor="zipcode">Tastiqlash Belgisi:</label>
+                        <input
+                          type="password" 
+                          required 
+                          minLength={6}
+                          id="zipcode"
+                          placeholder="Tastiqlash belgisini kiriting..."
+                          value={zipCode}
+                          onChange={(e) => setZipCode(e.target.value)}
+                        />
                         <label htmlFor="password">Parol:</label>
                         <input
                           type="password" 
@@ -63,20 +80,7 @@ const AddZipCodeModal = ({setIsAddZipCodeModalOpen}) => {
                           value={password}
                           onChange={(e) => setPassword(e.target.value)}
                         />
-                        {State_User.user.zipCode ? null :
-                          <>
-                            <label htmlFor="zipcode">Tastiqlash Belgisi:</label>
-                            <input
-                              type="password" 
-                              required 
-                              minLength={6}
-                              id="zipcode"
-                              placeholder="Tastiqlash belgisini kiriting..."
-                              value={zipCode}
-                              onChange={(e) => setZipCode(e.target.value)}
-                            />
-                          </>
-                        }
+                        
                         {isAddTrue ? <div className="success-checkmark">
                                        <div className="check-icon">
                                          <span className="icon-line line-tip"></span>

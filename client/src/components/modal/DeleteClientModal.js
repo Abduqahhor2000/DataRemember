@@ -81,7 +81,7 @@ const DeleteClientModal = ({setIsDeleteClientModalOpen, setEffect, effect}) => {
                           {deleteClientError ? <div className="red_alert">{deleteClientError}</div> : null}
                         </div>
                         <div className="button_list">
-                          <button className="b_submit" type="submit">{isLoading ? <div className="lds-ring"><div></div><div></div><div></div><div></div></div> :"O'chirish"}</button>
+                          <button className="b_delete" type="submit">{isLoading ? <div className="lds-ring"><div></div><div></div><div></div><div></div></div> :"O'chirish"}</button>
                           <button onClick={() => {setIsDeleteClientModalOpen(false)}} className="b_button" type="button">Yopish</button>
                         </div>
                       </form>
