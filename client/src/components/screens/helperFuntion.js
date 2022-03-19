@@ -37,3 +37,29 @@ export function farmatNumberStr(number) {
     }
     return number;
 }
+
+export function farmatNumberAndString(number, val){
+    if(number < 1000){
+        if(number <= 0){
+            return 0;
+        }
+        return number;
+    }
+    if(number < 1000000){
+        let vale = val === 0 ? 1000 : val === 1 ? 100 : val === 2 ? 10 : val === 3 ? 1 : 1;
+        return `${Math.floor(number / vale) * vale / 1000} ming`
+    }else if( number < 1000000000){
+        let vale = val === 0 ? 1000000 : val === 1 ? 100000 : val === 2 ? 10000 : val === 3 ? 1000 : 1000;
+        return `${Math.floor(number / vale) * vale / 1000000} mln`
+    }else if(number < 1000000000000){
+        let vale = val === 0 ? 1000000000 : val === 1 ? 100000000 : val === 2 ? 10000000 : val === 3 ? 1000000 : 1000000;
+        return `${Math.floor(number / vale) * vale / 1000000000} mlrd`
+    }else if(number < 1000000000000000){
+        let vale = val === 0 ? 1000000000000 : val === 1 ? 100000000000 : val === 2 ? 10000000000 : val === 3 ? 1000000000 : 1000000000;
+        return `${Math.floor(number / vale) * vale / 1000000000000} trln`
+    }else{
+        let vale = val === 0 ? 1000000000000 : val === 1 ? 100000000000 : val === 2 ? 10000000000 : val === 3 ? 1000000000 : 1000000000;
+        return `${Math.floor(number / vale) * vale / 1000000000000} trln`
+    }
+
+}

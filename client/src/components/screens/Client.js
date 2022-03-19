@@ -13,7 +13,7 @@ import AddSaleModal from "../modal/AddSaleModal";
 import EditPaymentModal from "../modal/EditPaymentModal";
 import EditSaleModal from "../modal/EditSaleModal";
 import DeleteConvertModal from "../modal/DeleteConvertModal";
-import { farmatDate, farmatNumberStr } from "./helperFuntion";
+import { farmatDate, farmatNumberAndString, farmatNumberStr } from "./helperFuntion";
 import EditClientModal from "../modal/EditClientModal";
 import DeleteClientModal from "../modal/DeleteClientModal";
 import {UncontrolledButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem} from "reactstrap";
@@ -127,10 +127,10 @@ const Client = () => {
                 <div className="type_left1" style={{"width": "100%"}}>
                     <div className="payment"style={{"width": "100%"}}> 
                         <div className="icon" style={{"width": "100%", "flexWrap": "wrap"}}>      
-                          <div className="number" style={{"width": "50%", "fontSize" : "14px"}}><FcMoneyTransfer/> &nbsp; Haq: {farmatNumberStr(stat_client?.sales - stat_client?.payment)} &nbsp; &nbsp;</div>
-                          <div className="number" style={{"width": "50%", "fontSize" : "14px"}}><FcDebt/> &nbsp; Qarz: {farmatNumberStr(stat_client?.payment  - stat_client?.sales)} &nbsp; &nbsp;</div>
-                          <div className="number" style={{"width": "50%", "fontSize" : "14px"}}><FcBullish/> &nbsp; Sotuv: {farmatNumberStr(stat_client?.sales)} &nbsp;  &nbsp;</div>
-                          <div className="number" style={{"width": "50%", "fontSize" : "14px"}}><FcSalesPerformance/> &nbsp; Kirim: {farmatNumberStr(stat_client?.payment)}</div>  
+                          <div className="number" style={{"width": "50%", "fontSize" : "14px"}}><FcMoneyTransfer/> &nbsp; Haq: {farmatNumberAndString(stat_client?.sales - stat_client?.payment, 3)} &nbsp; &nbsp;</div>
+                          <div className="number" style={{"width": "50%", "fontSize" : "14px"}}><FcDebt/> &nbsp; Qarz: {farmatNumberAndString(stat_client?.payment  - stat_client?.sales, 3)} &nbsp; &nbsp;</div>
+                          <div className="number" style={{"width": "50%", "fontSize" : "14px"}}><FcBullish/> &nbsp; Sotuv: {farmatNumberAndString(stat_client?.sales, 3)} &nbsp;  &nbsp;</div>
+                          <div className="number" style={{"width": "50%", "fontSize" : "14px"}}><FcSalesPerformance/> &nbsp; Kirim: {farmatNumberAndString(stat_client?.payment, 3)}</div>  
                         </div>
                     </div>
                 </div>
